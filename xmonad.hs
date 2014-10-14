@@ -24,4 +24,3 @@ main = do
         , ((0, xK_Print), spawn "scrot")
         , ((mod1Mask, xK_Shift_L), spawn "/home/gauthier/bin/layout_switch.sh")
      ]
-
