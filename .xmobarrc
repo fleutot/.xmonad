@@ -15,5 +15,5 @@ Config { font = "xft:Fixed-8"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %cpu% | %memory% * %swap% | <fc=orange3>%date%</fc> | %ESGP% | %kbd% |"
+       , template = "%StdinReader% }{ %cpu% | %memory% | <fc=orange3>%date%</fc> | %ESGP% | %kbd% |"
        }
