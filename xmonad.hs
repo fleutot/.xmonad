@@ -5,7 +5,7 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import System.IO
 
-myWorkspaces = ["1|edit", "2|term", "3|mail", "4|chat", "5|www", "6|priv", "7|media", "8|admin"]
+myWorkspaces = ["1|edit ", "2|term ", "3|mail ", "4|chat ", "5|www ", "6|priv ", "7|media ", "8|admin"]
 
 main = do
     xmproc <- spawnPipe "/usr/bin/xmobar /home/gauthier/.xmonad/.xmobarrc"

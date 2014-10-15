@@ -1,12 +1,12 @@
-Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
-       , bgColor = "black"
-       , fgColor = "grey"
+Config { font = "xft:Fixed-8"
+       , bgColor = "grey20"
+       , fgColor = "bisque3"
        , position = TopW L 98
        , lowerOnStart = False
        , hideOnStart = False
        , allDesktops = True
-       , commands = [ Run Weather "ESGP" ["-t"," <tempC>C","-L","0","-H","15","--normal","green","--high","red","--low","lightblue"] 36000
-                    , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
+       , commands = [ Run Weather "ESGP" ["-t"," <tempC>°C","-L","0","-H","15","--normal","mediumseagreen","--high","coral3","--low","cadetblue3"] 36000
+                    , Run Cpu ["-L","3","-H","50","--normal","mediumseagreen","--high","coral3"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run Swap [] 10
                     , Run Date "%a %_d %b %H:%M" "date" 10
@@ -15,5 +15,5 @@ Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %cpu% | %memory% * %swap%    <fc=#ee9a00>%date%</fc> | %ESGP% | %kbd%"
+       , template = "%StdinReader% }{ %cpu% | %memory% * %swap% | <fc=orange3>%date%</fc> | %ESGP% | %kbd% |"
        }
