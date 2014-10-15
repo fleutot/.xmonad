@@ -1,7 +1,7 @@
 Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
        , bgColor = "black"
        , fgColor = "grey"
-       , position = Static { xpos = 0, ypos = 0, width = 1904, height = 16}
+       , position = TopW L 98
        , lowerOnStart = False
        , hideOnStart = False
        , allDesktops = True
@@ -11,8 +11,9 @@ Config { font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
                     , Run Swap [] 10
                     , Run Date "%a %_d %b %H:%M" "date" 10
                     , Run StdinReader
+                    , Run Kbd [("se", "SE"), ("us", "US")]
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %cpu% | %memory% * %swap%    <fc=#ee9a00>%date%</fc> | %ESGP%"
+       , template = "%StdinReader% }{ %cpu% | %memory% * %swap%    <fc=#ee9a00>%date%</fc> | %ESGP% | %kbd%"
        }
