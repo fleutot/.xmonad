@@ -5,8 +5,8 @@ Config { font = "xft:Fixed-8"
        , lowerOnStart = False
        , hideOnStart = False
        , allDesktops = True
-       , commands = [ Run Weather "ESGP" ["-t"," <tempC>°C","-L","0","-H","15","--normal","mediumseagreen","--high","coral3","--low","cadetblue3"] 36000
-                    , Run Cpu ["-L","3","-H","50","--normal","mediumseagreen","--high","coral3"] 10
+       , commands = [ Run Weather "ESGP" ["-t"," <tempC>°C","-L","0","-H","15","--normal","#7f9f7f","--high","coral3","--low","cadetblue3"] 36000
+                    , Run Cpu ["-L","3","-H","50","--normal","#7f9f7f","--high","coral3"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run Swap [] 10
                     , Run Date "%a %_d %b %H:%M" "date" 10
