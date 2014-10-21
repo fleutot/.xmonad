@@ -1,7 +1,7 @@
 Config { font = "xft:Fixed-8"
        , bgColor = "grey20"
        , fgColor = "bisque3"
-       , position = TopW L 98
+       , position = TopW L 97
        , lowerOnStart = False
        , hideOnStart = False
        , allDesktops = True
@@ -15,5 +15,5 @@ Config { font = "xft:Fixed-8"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %cpu% | %memory% | <fc=orange3>%date%</fc> | %ESGP% | %kbd% |"
+       , template = "%StdinReader% }{ %cpu% │ %memory% │ <fc=#e05a2b>%date%</fc> │ %ESGP% │ %kbd% │"
        }
