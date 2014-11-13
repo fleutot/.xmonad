@@ -1,19 +1,20 @@
-Config { font = "xft:Fixed-8"
+Config { font = "xft:Terminus-9"
        , bgColor = "grey20"
-       , fgColor = "bisque3"
+       , fgColor = "bisque4"
        , position = TopW L 97
        , lowerOnStart = False
        , hideOnStart = False
        , allDesktops = True
-       , commands = [ Run Weather "ESGP" ["-t"," <tempC>°C","-L","0","-H","15","--normal","#7f9f7f","--high","coral3","--low","cadetblue3"] 36000
-                    , Run Cpu ["-L","3","-H","50","--normal","#7f9f7f","--high","coral3"] 10
-                    , Run Memory ["-t","Mem: <usedratio>%"] 10
-                    , Run Swap [] 10
+       , borderColor = "bisque3"
+       , border = NoBorder -- BottomBM 1
+       , commands = [ Run Weather "ESGP" ["-t"," <tempC>°C","-L","0","-H","15","--normal","#547D5D","--high","coral3","--low","cadetblue3"] 36000
+                    , Run Cpu ["-t","Cpu <total>%","-L","3","-H","50","--normal","#547D5D","--high","coral3"] 10
+                    , Run Memory ["-t","Mem <usedratio>%"] 10
                     , Run Date "%a %_d %b %H:%M" "date" 10
                     , Run StdinReader
                     , Run Kbd [("se", "SE"), ("us", "US")]
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %cpu% │ %memory% │ <fc=#e05a2b>%date%</fc> │ %ESGP% │ %kbd% │"
+       , template = "%StdinReader% }{%cpu% · %memory% · <fc=#e05a2b>%date%</fc> · %ESGP% · %kbd% |"
        }
