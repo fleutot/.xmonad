@@ -37,8 +37,10 @@ main = do
                         , ppTitle = xmobarColor "#547D5D" "" . shorten 80
                         , ppCurrent = xmobarColor "grey20" "bisque3"
                         , ppVisible = xmobarColor "grey20" "bisque4"
+                        , ppHidden = xmobarColor "bisque4" "grey17"
+                        , ppHiddenNoWindows = xmobarColor "grey30" "grey17"
                         , ppUrgent = xmobarColor "black" "red" . wrap "<<" ">>"
-                        , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
+                        , ppWsSep = " " -- if the font has it: " │ ". See .xmobarrc template as well.
                         , ppSep = "   *   " -- if the font has it: " ║ "
                         }
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
