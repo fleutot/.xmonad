@@ -3,9 +3,11 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
+import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.IM as IM
 import XMonad.Util.Dzen
+import XMonad.Util.Replace
 import XMonad.Util.Run(spawnPipe, runProcessWithInput)
 import XMonad.Util.EZConfig(additionalKeys)
 import System.IO
@@ -26,7 +28,10 @@ skypeRoster = (IM.Title "g.ostervall_cipherstone.com - Skype™")
 
 -- (ClassName "Skype") `And` (Not (Title "Options")) `And` (Not (Role "Chats")) `And` (Not (Role "CallWindowForm"))
 
-myLayout = (ResizableTall 1 (3/100) (1/2) []) ||| Mirror tiled ||| Full ||| skypeLayout
+myLayout = renamed [Replace "Tall"] (ResizableTall 1 (3/100) (1/2) [])
+         ||| renamed [Replace "!Tall"] (Mirror tiled)
+         ||| (Full)
+         ||| renamed [Replace "Chat"] skypeLayout
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -47,10 +52,10 @@ main = do
                         , ppTitle = xmobarColor "#547D5D" "" . shorten 80
                         , ppCurrent = xmobarColor "grey20" "bisque3"
                         , ppVisible = xmobarColor "grey20" "bisque4"
-                        , ppHidden = xmobarColor "bisque4" "grey17"
-                        , ppHiddenNoWindows = xmobarColor "grey30" "grey17"
+                        , ppHidden = xmobarColor "bisque4" ""
+                        , ppHiddenNoWindows = xmobarColor "grey30" ""
                         , ppUrgent = xmobarColor "black" "red" . wrap "<<" ">>"
-                        , ppWsSep = " " -- if the font has it: " │ ". See .xmobarrc template as well.
+                        , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
                         , ppSep = "   *   " -- if the font has it: " ║ "
                         }
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
