@@ -1,7 +1,7 @@
 Config { font = "xft:Terminus-9"
        , bgColor = "grey20"
        , fgColor = "bisque4"
-       , position = TopW L 97
+       , position = TopW L 96
        , lowerOnStart = False
        , hideOnStart = False
        , allDesktops = True
