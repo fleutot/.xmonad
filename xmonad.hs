@@ -46,7 +46,8 @@ showVol = dzenConfig return . show
 
 main = do
     xmproc <- spawnPipe "/usr/bin/xmobar /home/gauthier/.xmonad/.xmobarrc"
-    xmonad $ defaultConfig {
+    xmonad $ withUrgencyHook NoUrgencyHook
+           $ defaultConfig {
         workspaces = myWorkspaces
         , manageHook = myManageHook <+> manageHook defaultConfig
         -- , layoutHook = avoidStruts  $  layoutHook defaultConfig -- old default
