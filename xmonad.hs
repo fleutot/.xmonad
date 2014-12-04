@@ -5,6 +5,8 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
 import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.ThreeColumns
+import XMonad.Layout.TwoPane
 import XMonad.Layout.IM as IM
 import XMonad.Util.Dzen
 import XMonad.Util.Replace
@@ -13,7 +15,7 @@ import XMonad.Util.EZConfig(additionalKeys)
 import System.IO
 import Data.Ratio ((%))
 
-myWorkspaces = [" 1.edit ", " 2.term ", " 3.doc ", " 4.mail ", " 5.www ", " 6.chat ", " 7.priv ", " 8.media ", " 9.admin "]
+myWorkspaces = ["1.edit", "2.term", "3.doc", "4.mail", "5.www", "6.chat", "7.priv", "8.media", "9.admin"]
 myBorderWidth = 2
 myNormalBorderColor = "grey25"
 myFocusedBorderColor = "#dd4814"
@@ -28,10 +30,12 @@ skypeRoster = (IM.Title "g.ostervall_cipherstone.com - Skype™")
 
 -- (ClassName "Skype") `And` (Not (Title "Options")) `And` (Not (Role "Chats")) `And` (Not (Role "CallWindowForm"))
 
-myLayout = renamed [Replace "Tall"] (ResizableTall 1 (3/100) (1/2) [])
+myLayout = renamed [Replace "Tall"] (ResizableTall 1 (delta) (ratio) [])
          ||| renamed [Replace "!Tall"] (Mirror tiled)
          ||| (Full)
          ||| renamed [Replace "Chat"] skypeLayout
+         ||| TwoPane (delta) (ratio)
+         ||| ThreeCol 1 (delta) (ratio)
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -50,11 +54,11 @@ main = do
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
                         , ppTitle = xmobarColor "#547D5D" "" . shorten 80
-                        , ppCurrent = xmobarColor "grey20" "bisque3"
-                        , ppVisible = xmobarColor "grey20" "bisque4"
-                        , ppHidden = xmobarColor "bisque4" ""
-                        , ppHiddenNoWindows = xmobarColor "grey30" ""
-                        , ppUrgent = xmobarColor "black" "red" . wrap "<<" ">>"
+                        , ppCurrent = xmobarColor "grey20" "bisque3" . wrap " " " "
+                        , ppVisible = xmobarColor "grey20" "bisque4" . wrap " " " "
+                        , ppHidden = xmobarColor "bisque4" "" . wrap " " " "
+                        , ppHiddenNoWindows = xmobarColor "grey30" "" . wrap " " " "
+                        , ppUrgent = xmobarColor "black" "red" . wrap ">" "<"
                         , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
                         , ppSep = "   *   " -- if the font has it: " ║ "
                         }
