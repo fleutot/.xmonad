@@ -73,8 +73,8 @@ main = do
         } `additionalKeys`
         [ ((mod4Mask .|. controlMask, xK_l), spawn "xscreensaver-command -lock")
         , ((mod4Mask .|. controlMask, xK_z), spawn "xscreensaver-command -lock ; sudo pm-suspend --quirk-dpms-on")
-        , ((controlMask, xK_Print), spawn "sleep 0.2; scrot -s")
-        , ((0, xK_Print), spawn "scrot")
+        , ((controlMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
+        , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
         , ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set", "Master", "2+"] "" >>= dzenConfig return)
         , ((mod4Mask .|. mod1Mask, xK_d), spawn "amixer set Master 2-" >>= showVol)
         -- focus urgent window
@@ -83,5 +83,3 @@ main = do
         , ((mod4Mask .|. shiftMask, xK_l), sendMessage MirrorExpand)
         , ((controlMask .|. mod1Mask, xK_equal), kill)
         ]
-
-
