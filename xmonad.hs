@@ -12,6 +12,7 @@ import XMonad.Util.Dzen
 import XMonad.Util.Replace
 import XMonad.Util.Run(spawnPipe, runProcessWithInput)
 import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.WorkspaceCompare
 import System.IO
 import Data.Ratio ((%))
 
@@ -59,7 +60,9 @@ main = do
                         , ppVisible = xmobarColor "grey20" "bisque4" . wrap " " " "
                         , ppHidden = xmobarColor "bisque4" "" . wrap " " " "
                         , ppHiddenNoWindows = xmobarColor "grey30" "" . wrap " " " "
-                        , ppUrgent = xmobarColor "black" "red" . wrap ">" "<"
+                        , ppUrgent = xmobarColor "black" "#dd4814" . wrap ">" "<"
+                        , ppSort = getSortByXineramaRule
+                        , ppLayout = xmobarColor "#088da5" "" -- "steelblue" ""
                         , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
                         , ppSep = "   *   " -- if the font has it: " ║ "
                         }
