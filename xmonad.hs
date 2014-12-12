@@ -46,7 +46,7 @@ myLayout = renamed [Replace "Tall"] (ResizableTall 1 (delta) (ratio) [])
 showVol = dzenConfig return . show
 
 main = do
-    xmproc <- spawnPipe "/usr/bin/xmobar /home/gauthier/.xmonad/.xmobarrc"
+    xmproc <- spawnPipe "/usr/bin/xmobar /home/gauthier/.xmonad/.xmobarrc -x 1"
     xmonad $ withUrgencyHook NoUrgencyHook
            $ defaultConfig {
         workspaces = myWorkspaces
@@ -62,7 +62,7 @@ main = do
                         , ppHiddenNoWindows = xmobarColor "grey30" "" . wrap " " " "
                         , ppUrgent = xmobarColor "black" "#dd4814" . wrap ">" "<"
                         , ppSort = getSortByXineramaRule
-                        , ppLayout = xmobarColor "#088da5" "" -- "steelblue" ""
+                        , ppLayout = xmobarColor "#617b95" ""
                         , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
                         , ppSep = "   *   " -- if the font has it: " ║ "
                         }

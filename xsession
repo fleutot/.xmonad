@@ -5,7 +5,7 @@
 xsetroot -fg bisque3 -bg grey20 -mod 2 2 -rv
 
 # Tray for skype and other icons
-trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --widthtype pixel --width 77 --transparent true --alpha 0 --tint 0x333333 --height 16 &
+trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --widthtype pixel --width 77 --transparent true --alpha 0 --tint 0x333333 --height 16 --monitor 1 &
 
 # Keyboard layout switcher
 setxkbmap -layout us,se -variant ,kinesis -option 'grp:alt_shift_toggle' &
