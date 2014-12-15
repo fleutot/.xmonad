@@ -6,6 +6,7 @@ import XMonad.Layout.Grid
 import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.ThreeColumns
+
 import XMonad.Layout.TwoPane
 import XMonad.Layout.IM as IM
 import XMonad.Util.Dzen
@@ -15,6 +16,9 @@ import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.WorkspaceCompare
 import System.IO
 import Data.Ratio ((%))
+
+import XMonad hiding ( (|||) )
+import XMonad.Layout.LayoutCombinators
 
 myWorkspaces = ["1.edit", "2.term", "3.doc", "4.mail", "5.www", "6.chat", "7.priv", "8.media", "9.admin"]
 myBorderWidth = 2
@@ -32,11 +36,11 @@ skypeRoster = (IM.Title "g.ostervall_cipherstone.com - Skype™")
 -- (ClassName "Skype") `And` (Not (Title "Options")) `And` (Not (Role "Chats")) `And` (Not (Role "CallWindowForm"))
 
 myLayout = renamed [Replace "Tall"] (ResizableTall 1 (delta) (ratio) [])
-         ||| renamed [Replace "!Tall"] (Mirror tiled)
-         ||| (Full)
-         ||| renamed [Replace "Chat"] skypeLayout
-         ||| TwoPane (delta) (ratio)
-         ||| ThreeCol 1 (delta) (ratio)
+         XMonad.Layout.LayoutCombinators.||| renamed [Replace "Wide"] (Mirror tiled)
+         XMonad.Layout.LayoutCombinators.||| (Full)
+         XMonad.Layout.LayoutCombinators.||| renamed [Replace "Chat"] skypeLayout
+         XMonad.Layout.LayoutCombinators.||| TwoPane (delta) (ratio)
+         XMonad.Layout.LayoutCombinators.||| ThreeCol 1 (delta) (ratio)
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -51,7 +55,6 @@ main = do
            $ defaultConfig {
         workspaces = myWorkspaces
         , manageHook = myManageHook <+> manageHook defaultConfig
-        -- , layoutHook = avoidStruts  $  layoutHook defaultConfig -- old default
         , layoutHook = avoidStruts  $ myLayout
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
@@ -82,4 +85,10 @@ main = do
         , ((mod4Mask .|. shiftMask, xK_h), sendMessage MirrorShrink)
         , ((mod4Mask .|. shiftMask, xK_l), sendMessage MirrorExpand)
         , ((controlMask .|. mod1Mask, xK_equal), kill)
+        , ((mod4Mask, xK_z), sendMessage (JumpToLayout "Tall"))
+        , ((mod4Mask, xK_x), sendMessage (JumpToLayout "Wide"))
+        , ((mod4Mask, xK_f), sendMessage (JumpToLayout "Full"))
+        , ((mod4Mask, xK_c), sendMessage (JumpToLayout "Chat"))
+        , ((mod4Mask, xK_v), sendMessage (JumpToLayout "TwoPane"))
+        , ((mod4Mask, xK_b), sendMessage (JumpToLayout "ThreeCol"))
         ]
