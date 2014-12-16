@@ -1,24 +1,23 @@
-import XMonad
+import XMonad hiding ((|||))
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
+import XMonad.Layout.IM as IM
+import XMonad.Layout.LayoutCombinators
+import XMonad.Layout.NoBorders
 import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.ThreeColumns
-
 import XMonad.Layout.TwoPane
-import XMonad.Layout.IM as IM
 import XMonad.Util.Dzen
+import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.Replace
 import XMonad.Util.Run(spawnPipe, runProcessWithInput)
-import XMonad.Util.EZConfig(additionalKeys)
 import XMonad.Util.WorkspaceCompare
+
 import System.IO
 import Data.Ratio ((%))
-
-import XMonad hiding ( (|||) )
-import XMonad.Layout.LayoutCombinators
 
 myWorkspaces = ["1.edit", "2.term", "3.doc", "4.mail", "5.www", "6.chat", "7.priv", "8.media", "9.admin"]
 myBorderWidth = 2
@@ -36,11 +35,11 @@ skypeRoster = (IM.Title "g.ostervall_cipherstone.com - Skype™")
 -- (ClassName "Skype") `And` (Not (Title "Options")) `And` (Not (Role "Chats")) `And` (Not (Role "CallWindowForm"))
 
 myLayout = renamed [Replace "Tall"] (ResizableTall 1 (delta) (ratio) [])
-         XMonad.Layout.LayoutCombinators.||| renamed [Replace "Wide"] (Mirror tiled)
-         XMonad.Layout.LayoutCombinators.||| (Full)
-         XMonad.Layout.LayoutCombinators.||| renamed [Replace "Chat"] skypeLayout
-         XMonad.Layout.LayoutCombinators.||| TwoPane (delta) (ratio)
-         XMonad.Layout.LayoutCombinators.||| ThreeCol 1 (delta) (ratio)
+         ||| renamed [Replace "Wide"] (Mirror tiled)
+         ||| (Full)
+         ||| renamed [Replace "Chat"] skypeLayout
+         ||| TwoPane (delta) (ratio)
+         ||| ThreeCol 1 (delta) (ratio)
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -55,7 +54,7 @@ main = do
            $ defaultConfig {
         workspaces = myWorkspaces
         , manageHook = myManageHook <+> manageHook defaultConfig
-        , layoutHook = avoidStruts  $ myLayout
+        , layoutHook = avoidStruts $ smartBorders $ myLayout
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
                         , ppTitle = xmobarColor "#547D5D" "" . shorten 80
