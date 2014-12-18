@@ -49,7 +49,7 @@ myLayout = renamed [Replace "Tall"] (smartSpacing 1 $ ResizableTall 1 (delta) (r
 showVol = dzenConfig return . show
 
 main = do
-    xmproc <- spawnPipe "/usr/bin/xmobar /home/gauthier/.xmonad/.xmobarrc -x 1"
+    xmproc <- spawnPipe "/usr/bin/xmobar /home/gauthier/.xmonad/.xmobarrc"
     xmonad $ withUrgencyHook NoUrgencyHook
            $ defaultConfig {
         workspaces = myWorkspaces

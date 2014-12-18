@@ -1,7 +1,7 @@
 Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
        , bgColor = "grey20"
        , fgColor = "bisque4"
-       , position = TopW L 96
+       , position = TopW L 95
        , lowerOnStart = False
        , hideOnStart = False
        , allDesktops = True
@@ -9,6 +9,21 @@ Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
        , border = NoBorder -- BottomBM 1
        , commands = [ Run Weather "ESGP" ["-t"," <tempC>°C","-L","0","-H","15","--normal","#547D5D","--high","coral3","--low","cadetblue3"] 36000
                     , Run Cpu ["-t","Cpu <total>%","-L","3","-H","50","--normal","#547D5D","--high","coral3"] 10
+                    , Run Battery        [ "--template" , "Batt: <acstatus>"
+                             , "--Low"      , "10"        -- units: %
+                             , "--High"     , "80"        -- units: %
+                             , "--low"      , "darkorange"
+                             , "--normal"   , "bisque4"
+                             , "--high"     , "#547D5D"
+
+                             , "--" -- battery specific options
+                                       -- discharging status
+                                       , "-o"	, "<left>% (<timeleft>)"
+                                       -- AC "on" status
+                                       , "-O"	, "<fc=#dAA520>Charging</fc>"
+                                       -- charged status
+                                       , "-i"	, "<fc=#006000>Charged</fc>"
+                             ] 50
                     , Run Memory ["-t","Mem <usedratio>%"] 10
                     , Run Date "%a %_d %b %H:%M" "date" 10
                     , Run StdinReader
@@ -16,5 +31,5 @@ Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{%cpu% · %memory% · <fc=bisque3>%date%</fc> · %ESGP% · %kbd% |"
+       , template = "%StdinReader% }{%battery% · %cpu% · %memory% · <fc=bisque3>%date%</fc> · %ESGP% · %kbd% |"
        }
