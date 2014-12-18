@@ -9,6 +9,7 @@ import XMonad.Layout.Master
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.Spacing
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.TwoPane
@@ -30,16 +31,13 @@ myManageHook = composeAll
              , manageDocks
              ]
 
--- skypeLayout = IM.withIM (1%7) (IM.Title "g.ostervall_cipherstone.com - Skype™") Grid
 skypeLayout = IM.withIM (1%7) skypeRoster Grid
 skypeRoster = (IM.Title "g.ostervall_cipherstone.com - Skype™")
 
--- (ClassName "Skype") `And` (Not (Title "Options")) `And` (Not (Role "Chats")) `And` (Not (Role "CallWindowForm"))
-
-myLayout = renamed [Replace "Tall"] (ResizableTall 1 (delta) (ratio) [])
-         ||| renamed [Replace "Wide"] (Mirror tiled)
+myLayout = renamed [Replace "Tall"] (smartSpacing 1 $ ResizableTall 1 (delta) (ratio) [])
+         ||| renamed [Replace "Wide"] (smartSpacing 1 $ Mirror tiled)
          ||| (Full)
-         ||| renamed [Replace "Chat"] skypeLayout
+         ||| renamed [Replace "Chat"] (smartSpacing 10 $ skypeLayout)
          ||| renamed [Replace "Mastered Tabbed"] (multimastered 1 (delta) (ratio) $ simpleTabbed)
          ||| ThreeCol 1 (delta) (ratio)
   where
