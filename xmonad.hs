@@ -5,9 +5,11 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
 import XMonad.Layout.IM as IM
 import XMonad.Layout.LayoutCombinators
+import XMonad.Layout.Master
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.TwoPane
 import XMonad.Util.Dzen
@@ -38,7 +40,7 @@ myLayout = renamed [Replace "Tall"] (ResizableTall 1 (delta) (ratio) [])
          ||| renamed [Replace "Wide"] (Mirror tiled)
          ||| (Full)
          ||| renamed [Replace "Chat"] skypeLayout
-         ||| TwoPane (delta) (ratio)
+         ||| renamed [Replace "Mastered Tabbed"] (multimastered 1 (delta) (ratio) $ simpleTabbed)
          ||| ThreeCol 1 (delta) (ratio)
   where
      tiled   = Tall nmaster delta ratio
@@ -66,7 +68,7 @@ main = do
                         , ppSort = getSortByXineramaRule
                         , ppLayout = xmobarColor "bisque3" ""
                         , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
-                        , ppSep = "   *   " -- if the font has it: " ║ "
+                        , ppSep = "   ·   " -- if the font has it: " ║ "
                         }
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
         , borderWidth = myBorderWidth
@@ -88,6 +90,6 @@ main = do
         , ((mod4Mask, xK_x), sendMessage (JumpToLayout "Wide"))
         , ((mod4Mask, xK_f), sendMessage (JumpToLayout "Full"))
         , ((mod4Mask, xK_c), sendMessage (JumpToLayout "Chat"))
-        , ((mod4Mask, xK_v), sendMessage (JumpToLayout "TwoPane"))
+        , ((mod4Mask, xK_v), sendMessage (JumpToLayout "Mastered Tabbed"))
         , ((mod4Mask, xK_b), sendMessage (JumpToLayout "ThreeCol"))
         ]
