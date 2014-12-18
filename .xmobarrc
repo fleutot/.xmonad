@@ -1,4 +1,4 @@
-Config { font = "xft:Terminus-9"
+Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
        , bgColor = "grey20"
        , fgColor = "bisque4"
        , position = TopW L 96
@@ -16,5 +16,5 @@ Config { font = "xft:Terminus-9"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{%cpu% · %memory% · <fc=#e05a2b>%date%</fc> · %ESGP% · %kbd% |"
+       , template = "%StdinReader% }{%cpu% · %memory% · <fc=bisque3>%date%</fc> · %ESGP% · %kbd% |"
        }

@@ -21,7 +21,7 @@ import Data.Ratio ((%))
 
 myWorkspaces = ["1.edit", "2.term", "3.doc", "4.mail", "5.www", "6.chat", "7.priv", "8.media", "9.admin"]
 myBorderWidth = 2
-myNormalBorderColor = "grey25"
+myNormalBorderColor = "bisque4"
 myFocusedBorderColor = "#dd4814"
 myManageHook = composeAll
              [ className =? "Skype" --> doShift "6.chat"
@@ -57,14 +57,14 @@ main = do
         , layoutHook = avoidStruts $ smartBorders $ myLayout
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
-                        , ppTitle = xmobarColor "#547D5D" "" . shorten 80
+                        , ppTitle = xmobarColor "bisque4" "" . shorten 80
                         , ppCurrent = xmobarColor "grey20" "bisque3" . wrap " " " "
                         , ppVisible = xmobarColor "grey20" "bisque4" . wrap " " " "
                         , ppHidden = xmobarColor "bisque4" "" . wrap " " " "
                         , ppHiddenNoWindows = xmobarColor "grey30" "" . wrap " " " "
                         , ppUrgent = xmobarColor "black" "#dd4814" . wrap ">" "<"
                         , ppSort = getSortByXineramaRule
-                        , ppLayout = xmobarColor "#617b95" ""
+                        , ppLayout = xmobarColor "bisque3" ""
                         , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
                         , ppSep = "   *   " -- if the font has it: " ║ "
                         }
