@@ -32,7 +32,8 @@ myManageHook = composeAll
              ]
 
 skypeLayout = IM.withIM (1%7) skypeRoster Grid
-skypeRoster = (IM.Title "g.ostervall_cipherstone.com - Skype™")
+-- skypeRoster = (IM.Title "g.ostervall_cipherstone.com - Skype™")
+skypeRoster = (IM.Title "gauthier.fleutot - Skype™")
 
 myLayout = renamed [Replace "Tall"] (smartSpacing 1 $ ResizableTall 1 (delta) (ratio) [])
          ||| renamed [Replace "Wide"] (smartSpacing 1 $ Mirror tiled)
@@ -63,11 +64,12 @@ main = do
                         , ppHidden = xmobarColor "bisque4" "" . wrap " " " "
                         , ppHiddenNoWindows = xmobarColor "grey30" "" . wrap " " " "
                         , ppUrgent = xmobarColor "black" "#dd4814" . wrap ">" "<"
-                        , ppSort = getSortByXineramaRule
+                        -- , ppSort = getSortByXineramaRule
                         , ppLayout = xmobarColor "bisque3" ""
                         , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
                         , ppSep = "   ·   " -- if the font has it: " ║ "
                         }
+        , terminal = "urxvt"
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
         , borderWidth = myBorderWidth
         , normalBorderColor  = myNormalBorderColor

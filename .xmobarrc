@@ -1,7 +1,7 @@
 Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
        , bgColor = "grey20"
        , fgColor = "bisque4"
-       , position = TopW L 95
+       , position = TopW L 93
        , lowerOnStart = False
        , hideOnStart = False
        , allDesktops = True
