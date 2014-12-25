@@ -2,7 +2,7 @@ Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
        , bgColor = "grey20"
        , fgColor = "bisque4"
        , position = TopW L 93
-       , lowerOnStart = False
+       , lowerOnStart = True
        , hideOnStart = False
        , allDesktops = True
        , borderColor = "bisque3"
@@ -17,12 +17,14 @@ Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
                              , "--high"     , "#547D5D"
 
                              , "--" -- battery specific options
+                                       -- status location
+                                       , "-f"   , "AC0/online"
                                        -- discharging status
                                        , "-o"	, "<left>% (<timeleft>)"
                                        -- AC "on" status
-                                       , "-O"	, "<fc=#dAA520>Charging</fc>"
+                                       , "-O"	, "<fc=#547D5D>AC</fc> (<left>%)"
                                        -- charged status
-                                       , "-i"	, "<fc=#006000>Charged</fc>"
+                                       , "-i"	, "<fc=#547D5D>AC</fc> (max)"
                              ] 50
                     , Run Memory ["-t","Mem <usedratio>%"] 10
                     , Run Date "%a %_d %b %H:%M" "date" 10
@@ -31,5 +33,5 @@ Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{%battery% · %cpu% · %memory% · <fc=bisque3>%date%</fc> · %ESGP% · %kbd% |"
+       , template = "%StdinReader% }{<fc=bisque3>|</fc> %battery% · %cpu% · %memory% · <fc=bisque3>%date%</fc> · %ESGP% · %kbd% |"
        }
