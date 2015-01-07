@@ -39,7 +39,7 @@ myLayout = renamed [Replace "Tall"] (smartSpacing 1 $ ResizableTall 1 (delta) (r
          ||| (Full)
          ||| renamed [Replace "Chat"] (smartSpacing 10 $ skypeLayout)
          ||| renamed [Replace "Mastered Tabbed"] (multimastered 1 (delta) (ratio) $ simpleTabbed)
-         ||| ThreeCol 1 (delta) (ratio)
+         ||| ThreeCol 1 (delta) (1/3)
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
