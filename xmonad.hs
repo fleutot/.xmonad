@@ -1,4 +1,5 @@
 import XMonad hiding ((|||))
+import XMonad.Actions.RotSlaves
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
@@ -90,4 +91,7 @@ main = do
         , ((mod4Mask, xK_c), sendMessage (JumpToLayout "Chat"))
         , ((mod4Mask, xK_v), sendMessage (JumpToLayout "Mastered Tabbed"))
         , ((mod4Mask, xK_b), sendMessage (JumpToLayout "ThreeCol"))
+        -- Rotate windows while keeping focus
+        , ((mod4Mask .|. controlMask, xK_j), rotAllUp)
+        , ((mod4Mask .|. controlMask, xK_k), rotAllDown)
         ]
