@@ -30,8 +30,6 @@ if [[ -x "/usr/bin/emacs" ]] ; then
     emacs &
 fi
 
-gnome-terminal &
-
 if [-x /usr/bin/gnome-power-manager ] ; then
     sleep 3
     gnome-power-manager &
@@ -42,10 +40,10 @@ if [[ -x "/usr/bin/skype" ]] ; then
     skype &
 fi
 
-if [[ -x "/opt/thefanclub/grive-tools/grive-indicator" ]] ; then
-    /opt/thefanclub/grive-tools/grive-indicator &
-fi
+# if [[ -x "/opt/thefanclub/grive-tools/grive-indicator" ]] ; then
+#     /opt/thefanclub/grive-tools/grive-indicator &
+# fi
 
 if [[ -x "/usr/bin/unclutter" ]] ; then
-    unclutter &
+    unclutter -grab &
 fi
