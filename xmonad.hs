@@ -91,6 +91,7 @@ main = do
         , ((mod4Mask, xK_c), sendMessage (JumpToLayout "Chat"))
         , ((mod4Mask, xK_v), sendMessage (JumpToLayout "Mastered Tabbed"))
         , ((mod4Mask, xK_b), sendMessage (JumpToLayout "ThreeCol"))
+        , ((mod4Mask .|. shiftMask, xK_f), sendMessage ToggleStruts)
         -- Rotate windows while keeping focus
         , ((mod4Mask .|. controlMask, xK_j), rotAllUp)
         , ((mod4Mask .|. controlMask, xK_k), rotAllDown)
