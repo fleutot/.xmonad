@@ -1,12 +1,12 @@
 #!/bin/bash
-# .xsession must be in the home directory. If the file you are currently viewing
-# is not ~/.xsession, make a hardlink there to this file.
+# By default, xmonad looks for this in ~/.xmonad/xmonad-session-rc.
+# If this file does not exist, create it, or a link to this content.
 
 # Background pattern
 xsetroot -fg bisque3 -bg grey20 -mod 2 2 -rv
 
 # Tray for skype and other icons
-trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --widthtype percent --width 9 --transparent true --alpha 0 --tint 0x333333 --height 16 --monitor 1 &
+trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --widthtype percent --width 4 --transparent true --alpha 0 --tint 0x333333 --height 16 --monitor 1 &
 
 # Keyboard layout switcher
 setxkbmap -layout us,se -variant ,kinesis -option 'grp:alt_shift_toggle' &
@@ -30,7 +30,7 @@ if [[ -x "/usr/bin/emacs" ]] ; then
     emacs &
 fi
 
-if [-x /usr/bin/gnome-power-manager ] ; then
+if [[ -x "/usr/bin/gnome-power-manager" ]] ; then
     sleep 3
     gnome-power-manager &
 fi
@@ -45,5 +45,7 @@ fi
 # fi
 
 if [[ -x "/usr/bin/unclutter" ]] ; then
-    unclutter -grab &
+    # -noevents is needed in order not to give focus to the window under the
+    # possibly hidden cursor upon switching workspace.
+    unclutter -grab -noevents &
 fi
