@@ -1,11 +1,13 @@
+-- The xft font renders non vertically centered on the bar, ugly. Xlfd (the one with -*-*-...) works better.
+--Config { font = "xft:terminus-9:pixelsize=12"
 Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
        , bgColor = "grey20"
        , fgColor = "bisque4"
-       , position = TopW L 96
+--       , alpha = 205  -- alpha does not work with background color under characters
+       , position = TopW L 100
        , lowerOnStart = True
        , hideOnStart = False
        , allDesktops = True
-       , borderColor = "bisque3"
        , border = NoBorder -- BottomBM 1
        , commands = [ Run Weather "ESGP" ["-t"," <tempC>°C","-L","0","-H","25","--normal","#547D5D","--high","coral3","--low","cadetblue3"] 36000
                     , Run Cpu ["-t","Cpu <total>%","-L","3","-H","50","--normal","#547D5D","--high","coral3"] 10
@@ -13,8 +15,9 @@ Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
                     , Run Date "%a %_d %b %H:%M" "date" 10
                     , Run StdinReader
                     , Run Kbd [("se", "SE"), ("us", "US")]
+                    , Run Com "/media/cipherstone_data/home/gauthier/.xmonad/trayer-padding-icon.sh" [] "trayerpad" 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{%cpu% · %memory% · <fc=bisque3>%date%</fc> · %ESGP% · %kbd% |"
+       , template = "%StdinReader% }{%cpu% · %memory% · <fc=bisque3>%date%</fc> · %ESGP% · %kbd% |%trayerpad% "
        }

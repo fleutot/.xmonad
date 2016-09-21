@@ -5,8 +5,15 @@
 # Background pattern
 xsetroot -fg bisque3 -bg grey20 -mod 2 2 -rv
 
+# Wallpaper
+if [[ -e "$HOME/wallpaper.jpg" && -x "/usr/bin/compton" && -x "/usr/bin/feh" ]]; then
+    compton --config "$HOME/compton.conf" &
+    feh --bg-fill "$HOME/wallpaper.jpg"
+fi
+
 # Tray for skype and other icons
-trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --widthtype percent --width 4 --transparent true --alpha 0 --tint 0x333333 --height 16 --monitor 1 &
+# Transparency in order to match that of xmobar:
+trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true  --widthtype request  --transparent true --alpha 50 --tint 0x333333 --height 16 --monitor 1 &
 
 # Keyboard layout switcher
 setxkbmap -layout us,se -variant ,kinesis -option 'grp:alt_shift_toggle' &
@@ -47,5 +54,5 @@ fi
 if [[ -x "/usr/bin/unclutter" ]] ; then
     # -noevents is needed in order not to give focus to the window under the
     # possibly hidden cursor upon switching workspace.
-    unclutter -grab -noevents &
+    # unclutter -grab -noevents &
 fi

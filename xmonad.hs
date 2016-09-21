@@ -1,6 +1,8 @@
 import XMonad hiding ((|||))
 import XMonad.Actions.RotSlaves
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
@@ -35,9 +37,9 @@ myManageHook = composeAll
 skypeLayout = IM.withIM (1%7) skypeRoster Grid
 skypeRoster = (IM.Title "g.ostervall_cipherstone.com - Skype™")
 
-myLayout = renamed [Replace "Tall"] (smartSpacing 1 $ ResizableTall 1 (delta) (ratio) [])
+myLayout = renamed [Replace "Tall"] (smartSpacing 1 $ smartBorders $ ResizableTall 1 (delta) (ratio) [])
          ||| renamed [Replace "Wide"] (smartSpacing 1 $ Mirror tiled)
-         ||| (Full)
+         ||| (smartBorders Full)
          ||| renamed [Replace "Chat"] (smartSpacing 10 $ skypeLayout)
          ||| renamed [Replace "Mastered Tabbed"] (multimastered 1 (delta) (ratio) $ simpleTabbed)
          ||| ThreeCol 1 (delta) (1/3)
