@@ -1,5 +1,8 @@
 import XMonad hiding ((|||))
+import XMonad.Actions.RotSlaves
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
@@ -35,12 +38,12 @@ skypeLayout = IM.withIM (1%7) skypeRoster Grid
 -- skypeRoster = (IM.Title "g.ostervall_cipherstone.com - Skype™")
 skypeRoster = (IM.Title "gauthier.fleutot - Skype™")
 
-myLayout = renamed [Replace "Tall"] (smartSpacing 1 $ ResizableTall 1 (delta) (ratio) [])
+myLayout = renamed [Replace "Tall"] (smartSpacing 1 $ smartBorders $ ResizableTall 1 (delta) (ratio) [])
          ||| renamed [Replace "Wide"] (smartSpacing 1 $ Mirror tiled)
-         ||| (Full)
+         ||| (smartBorders Full)
          ||| renamed [Replace "Chat"] (smartSpacing 10 $ skypeLayout)
          ||| renamed [Replace "Mastered Tabbed"] (multimastered 1 (delta) (ratio) $ simpleTabbed)
-         ||| ThreeCol 1 (delta) (ratio)
+         ||| ThreeCol 1 (delta) (1/3)
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -57,7 +60,7 @@ color_lo_2 = "#8e5825"
 color_bg   = "black"
 
 main = do
-    xmproc <- spawnPipe "/usr/bin/xmobar /home/gauthier/.xmonad/.xmobarrc"
+    xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/.xmobarrc -x 1"
     xmonad $ withUrgencyHook NoUrgencyHook
            $ defaultConfig {
         workspaces = myWorkspaces
@@ -100,4 +103,7 @@ main = do
         , ((mod4Mask, xK_v), sendMessage (JumpToLayout "Mastered Tabbed"))
         , ((mod4Mask, xK_b), sendMessage (JumpToLayout "ThreeCol"))
         , ((mod4Mask .|. shiftMask, xK_f), sendMessage ToggleStruts)
+        -- Rotate windows while keeping focus
+        , ((mod4Mask .|. controlMask, xK_j), rotAllUp)
+        , ((mod4Mask .|. controlMask, xK_k), rotAllDown)
         ]

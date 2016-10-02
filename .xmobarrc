@@ -1,13 +1,16 @@
+-- The xft font renders non vertically centered on the bar, ugly. Xlfd (the one with -*-*-...) works better.
+--Config { font = "xft:terminus-9:pixelsize=12"
 Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
        , bgColor = "grey15"
        , fgColor = "#8e5825"
-       , position = TopW L 93
+--       , alpha = 205  -- alpha does not work with background color under characters
+--       , position = TopW L 100 -- Somehow, the icon created by trayerpad (see Run Com below) does not take any room
+         , position = TopW L 96
        , lowerOnStart = True
        , hideOnStart = False
        , allDesktops = True
-       , borderColor = "bisque3"
        , border = NoBorder -- BottomBM 1
-       , commands = [ Run Weather "ESGP" ["-t"," <tempC>°C","-L","0","-H","15","--normal","#547D5D","--high","coral3","--low","cadetblue3"] 36000
+       , commands = [ Run Weather "ESGP" ["-t"," <tempC>°C","-L","0","-H","25","--normal","#547D5D","--high","coral3","--low","cadetblue3"] 36000
                     , Run Cpu ["-t","Cpu <total>%","-L","3","-H","50","--normal","#547D5D","--high","coral3"] 10
                     , Run Battery        [ "--template" , "Batt: <acstatus>"
                              , "--Low"      , "10"        -- units: %
@@ -30,8 +33,9 @@ Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
                     , Run Date "%a %_d %b %H:%M" "date" 10
                     , Run StdinReader
                     , Run Kbd [("se", "SE"), ("us", "US")]
+                    , Run Com "/home/gauthier/.xmonad/trayer-padding-icon.sh" [] "trayerpad" 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ <fc=#f09f52>|</fc> %battery% · %cpu% · %memory% · <fc=#f09f52>%date%</fc> · %ESGP% · %kbd% <fc=#f09f52>|</fc>"
+       , template = "%StdinReader% }{ <fc=#f09f52>|</fc> %battery% · %cpu% · %memory% · <fc=#f09f52>%date%</fc> · %ESGP% · %kbd% <fc=#f09f52>|</fc> %trayerpad% "
        }
