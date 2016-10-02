@@ -1,6 +1,6 @@
 Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
-       , bgColor = "grey20"
-       , fgColor = "bisque4"
+       , bgColor = "grey15"
+       , fgColor = "#8e5825"
        , position = TopW L 93
        , lowerOnStart = True
        , hideOnStart = False
@@ -13,7 +13,7 @@ Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "80"        -- units: %
                              , "--low"      , "darkorange"
-                             , "--normal"   , "bisque4"
+                             , "--normal"   , "#8e5825"
                              , "--high"     , "#547D5D"
 
                              , "--" -- battery specific options
@@ -33,5 +33,5 @@ Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{<fc=bisque3>|</fc> %battery% · %cpu% · %memory% · <fc=bisque3>%date%</fc> · %ESGP% · %kbd% |"
+       , template = "%StdinReader% }{ <fc=#f09f52>|</fc> %battery% · %cpu% · %memory% · <fc=#f09f52>%date%</fc> · %ESGP% · %kbd% <fc=#f09f52>|</fc>"
        }

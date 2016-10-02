@@ -39,7 +39,7 @@ if [ -x /usr/bin/gnome-power-manager ] ; then
 elif [ -x /usr/bin/xfce4-power-manager ] ; then
     sleep 2
     # This might require superuser in order to allow hibernate.
-    xfce4-power-manager &
+    sudo xfce4-power-manager &
 fi
 
 if [[ -x "/usr/bin/skype" ]] ; then

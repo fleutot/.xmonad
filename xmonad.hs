@@ -49,6 +49,13 @@ myLayout = renamed [Replace "Tall"] (smartSpacing 1 $ ResizableTall 1 (delta) (r
 
 showVol = dzenConfig return . show
 
+color_fg   = "#f09f52"
+color_hi_2 = "#ffd6b0"
+color_hi_1 = "#ffc38a"
+color_lo_1 = "#cd7d20"
+color_lo_2 = "#8e5825"
+color_bg   = "black"
+
 main = do
     xmproc <- spawnPipe "/usr/bin/xmobar /home/gauthier/.xmonad/.xmobarrc"
     xmonad $ withUrgencyHook NoUrgencyHook
@@ -58,18 +65,18 @@ main = do
         , layoutHook = avoidStruts $ smartBorders $ myLayout
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
-                        , ppTitle = xmobarColor "bisque4" "" . shorten 80
-                        , ppCurrent = xmobarColor "grey20" "bisque3" . wrap " " " "
-                        , ppVisible = xmobarColor "grey20" "bisque4" . wrap " " " "
-                        , ppHidden = xmobarColor "bisque4" "" . wrap " " " "
-                        , ppHiddenNoWindows = xmobarColor "grey30" "" . wrap " " " "
+                        , ppTitle = xmobarColor color_lo_2 "" . shorten 80
+                        , ppCurrent = xmobarColor color_hi_2 "" . wrap " " " "
+                        , ppVisible = xmobarColor color_bg color_hi_1 . wrap " " " "
+                        , ppHidden = xmobarColor color_lo_1 "" . wrap " " " "
+                        , ppHiddenNoWindows = xmobarColor color_lo_2 "" . wrap " " " "
                         , ppUrgent = xmobarColor "black" "#dd4814" . wrap ">" "<"
                         -- , ppSort = getSortByXineramaRule
-                        , ppLayout = xmobarColor "bisque3" ""
+                        , ppLayout = xmobarColor color_fg ""
                         , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
-                        , ppSep = "   ·   " -- if the font has it: " ║ "
+                        , ppSep = "  ·  " -- if the font has it: " ║ "
                         }
-        , terminal = "urxvt"
+        , terminal = "gnome-terminal"
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
         , borderWidth = myBorderWidth
         , normalBorderColor  = myNormalBorderColor
