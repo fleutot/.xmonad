@@ -1,6 +1,15 @@
+-- To build a modern xmobar from cabal:
+-- sudo apt-get install cabal-install
+-- sudo apt-get install libghc-libxml-sax-dev
+-- sudo apt-get install c2hs
+-- sudo apt-get install libiv-dev
+-- sudo apt-get install libxpm-dev
+-- cabal install xmobar --flags="all_extensions"
+
+
 -- The xft font renders non vertically centered on the bar, ugly. Xlfd (the one with -*-*-...) works better.
---Config { font = "xft:terminus-9:pixelsize=12"
-Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
+Config { font = "xft:terminus-9:size=10,Symbola:size=10"
+--Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
        , bgColor = "grey20"
        , fgColor = "bisque4"
 --       , alpha = 205  -- alpha does not work with background color under characters

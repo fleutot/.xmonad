@@ -2,7 +2,6 @@ import XMonad hiding ((|||))
 import XMonad.Actions.RotSlaves
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.UrgencyHook
 import XMonad.Layout.Grid
@@ -25,7 +24,8 @@ import XMonad.Util.WorkspaceCompare
 import System.IO
 import Data.Ratio ((%))
 
-myWorkspaces = ["1.edit", "2.term", "3.doc", "4.mail", "5.www", "6.chat", "7.priv", "8.media", "9.admin"]
+--myWorkspaces = ["1.edit", "2.term", "3.doc", "4.mail", "5.www", "6.chat", "7.priv", "8.media", "9.admin"]
+myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 myBorderWidth = 2
 myNormalBorderColor = "bisque4"
 myFocusedBorderColor = "#dd4814"
@@ -37,12 +37,12 @@ myManageHook = composeAll
 skypeLayout = IM.withIM (1%7) skypeRoster Grid
 skypeRoster = (IM.Title "g.ostervall_cipherstone.com - Skype™")
 
-myLayout = renamed [Replace "Tall"] (smartSpacing 1 $ smartBorders $ ResizableTall 1 (delta) (ratio) [])
+myLayout = renamed [Replace "\x25eb"] (smartSpacing 1 $ smartBorders $ ResizableTall 1 (delta) (ratio) [])
          ||| renamed [Replace "Wide"] (smartSpacing 1 $ Mirror tiled)
-         ||| (smartBorders Full)
-         ||| renamed [Replace "Chat"] (smartSpacing 10 $ skypeLayout)
+         ||| renamed [Replace "\x25a1"] (smartBorders Full)
+         ||| renamed [Replace "\x260f"] (smartSpacing 10 $ skypeLayout)
          ||| renamed [Replace "Mastered Tabbed"] (multimastered 1 (delta) (ratio) $ simpleTabbed)
-         ||| ThreeCol 1 (delta) (1/3)
+         ||| renamed [Replace "\x2505"] (ThreeCol 1 (delta) (1/3))
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -52,7 +52,8 @@ myLayout = renamed [Replace "Tall"] (smartSpacing 1 $ smartBorders $ ResizableTa
 showVol = dzenConfig return . show
 
 main = do
-    xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/.xmobarrc -x 1"
+    --xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/.xmobarrc -x 1"
+    xmproc <- spawnPipe "~/.cabal/bin/xmobar ~/.xmonad/.xmobarrc -x 1"
     xmonad $ withUrgencyHook NoUrgencyHook
            $ defaultConfig {
         workspaces = myWorkspaces
@@ -87,14 +88,16 @@ main = do
         , ((mod4Mask .|. shiftMask, xK_h), sendMessage MirrorShrink)
         , ((mod4Mask .|. shiftMask, xK_l), sendMessage MirrorExpand)
         , ((controlMask .|. mod1Mask, xK_equal), kill)
-        , ((mod4Mask, xK_z), sendMessage (JumpToLayout "Tall"))
+        , ((mod4Mask, xK_z), sendMessage (JumpToLayout "\x25eb"))
         , ((mod4Mask, xK_x), sendMessage (JumpToLayout "Wide"))
-        , ((mod4Mask, xK_f), sendMessage (JumpToLayout "Full"))
-        , ((mod4Mask, xK_c), sendMessage (JumpToLayout "Chat"))
+        , ((mod4Mask, xK_f), sendMessage (JumpToLayout "\x25a1"))
+        , ((mod4Mask, xK_c), sendMessage (JumpToLayout "\x260f"))
         , ((mod4Mask, xK_v), sendMessage (JumpToLayout "Mastered Tabbed"))
-        , ((mod4Mask, xK_b), sendMessage (JumpToLayout "ThreeCol"))
+        , ((mod4Mask, xK_b), sendMessage (JumpToLayout "\x2505"))
         , ((mod4Mask .|. shiftMask, xK_f), sendMessage ToggleStruts)
         -- Rotate windows while keeping focus
         , ((mod4Mask .|. controlMask, xK_j), rotAllUp)
         , ((mod4Mask .|. controlMask, xK_k), rotAllDown)
+        -- Dmenu with options
+        , ((mod4Mask, xK_p), spawn "dmenu_run -fn -*-terminus-*-r-*-*-12-*-*-*-*-*-*-* -nb bisque3 -nf grey35 -sb bisque1 -sf grey10")
         ]
