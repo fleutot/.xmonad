@@ -11,7 +11,7 @@ if [[ -x "/usr/bin/compton" ]]; then
 fi
 
 # Wallpaper
-if [[ -e "$HOME/wallpaper.jpg" &&  && -x "/usr/bin/feh" ]]; then
+if [[ -e "$HOME/wallpaper.jpg" && -x "/usr/bin/feh" ]]; then
     feh --bg-fill "$HOME/wallpaper.jpg"
 fi
 
@@ -56,6 +56,7 @@ fi
 # fi
 
 if [[ -x "/usr/bin/unclutter" ]] ; then
+    # unclutter starts a default version by itself, see (and modify) /etc/default/unclutter
     # -noevents is needed in order not to give focus to the window under the
     # possibly hidden cursor upon switching workspace.
     unclutter -grab -noevents &

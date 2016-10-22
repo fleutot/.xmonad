@@ -30,7 +30,7 @@ myBorderWidth = 2
 myNormalBorderColor = "bisque4"
 myFocusedBorderColor = "#dd4814"
 myManageHook = composeAll
-             [ className =? "Skype" --> doShift "6.chat"
+             [ className =? "Skype" --> doShift "6"
              , manageDocks
              ]
 
