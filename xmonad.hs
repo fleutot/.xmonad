@@ -26,11 +26,12 @@ import Data.Ratio ((%))
 
 --myWorkspaces = ["1.edit", "2.term", "3.doc", "4.mail", "5.www", "6.chat", "7.priv", "8.media", "9.admin"]
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-myBorderWidth = 2
-myNormalBorderColor = "bisque4"
+myBorderWidth = 1
+myNormalBorderColor = "#363534"
 myFocusedBorderColor = "#dd4814"
 myManageHook = composeAll
              [ className =? "Skype" --> doShift "6"
+             , className =? "lcam-main" --> doFloat
              , manageDocks
              ]
 
@@ -40,9 +41,9 @@ skypeRoster = (IM.Title "g.ostervall_cipherstone.com - Skype™")
 myLayout = renamed [Replace "\x25eb"] (smartSpacing 1 $ smartBorders $ ResizableTall 1 (delta) (ratio) [])
          ||| renamed [Replace "Wide"] (smartSpacing 1 $ Mirror tiled)
          ||| renamed [Replace "\x25a1"] (smartBorders Full)
-         ||| renamed [Replace "\x260f"] (smartSpacing 10 $ skypeLayout)
+         ||| renamed [Replace "\x260f"] (smartSpacing 10 $ skypeLayout)  -- char
          ||| renamed [Replace "Mastered Tabbed"] (multimastered 1 (delta) (ratio) $ simpleTabbed)
-         ||| renamed [Replace "\x2505"] (ThreeCol 1 (delta) (1/3))
+         ||| renamed [Replace "\x2505"] (smartSpacing 1 $ ThreeCol 1 (delta) (1/3))  -- three columns
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1
@@ -79,7 +80,8 @@ main = do
         } `additionalKeys`
         [ ((mod4Mask .|. controlMask, xK_l), spawn "xscreensaver-command -lock")
         , ((mod4Mask .|. controlMask, xK_z), spawn "xscreensaver-command -lock ; sudo pm-suspend --quirk-dpms-on")
-        , ((controlMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
+        , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
+        , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
         , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
         , ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set", "Master", "2+"] "" >>= dzenConfig return)
         , ((mod4Mask .|. mod1Mask, xK_d), spawn "amixer set Master 2-" >>= showVol)
