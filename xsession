@@ -20,7 +20,9 @@ fi
 trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true  --widthtype request  --transparent true --alpha 50 --tint 0x333333 --height 16 --monitor 1&
 
 # Keyboard layout switcher
-setxkbmap -layout us,se -variant ,kinesis -option 'grp:alt_shift_toggle' &
+# alt_shift_toggle stopped working (switching on press instead of release, breaking shortcuts with alt+shift).
+# alt_caps might be better anyway, preventing rogue presses in eg emacs (M-< and M->).
+setxkbmap -layout us,se -variant ,kinesis -option 'grp:alt_caps_toggle' &
 # Per window keyboard layout
 kbdd
 
