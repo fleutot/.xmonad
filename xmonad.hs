@@ -37,13 +37,14 @@ myManageHook = composeAll
 
 skypeLayout = IM.withIM (1%7) skypeRoster Grid
 skypeRoster = (IM.Title "g.ostervall_cipherstone.com - Skype™")
+mySpacing = 2
 
-myLayout = renamed [Replace "\x25eb"] (smartSpacing 1 $ smartBorders $ ResizableTall 1 (delta) (ratio) [])
-         ||| renamed [Replace "Wide"] (smartSpacing 1 $ Mirror tiled)
+myLayout = renamed [Replace "\x25eb"] (smartSpacing mySpacing $ smartBorders $ ResizableTall 1 (delta) (ratio) [])
+         ||| renamed [Replace "Wide"] (smartSpacing mySpacing $ Mirror tiled)
          ||| renamed [Replace "\x25a1"] (smartBorders Full)
          ||| renamed [Replace "\x260f"] (smartSpacing 10 $ skypeLayout)  -- char
          ||| renamed [Replace "Mastered Tabbed"] (multimastered 1 (delta) (ratio) $ simpleTabbed)
-         ||| renamed [Replace "\x2505"] (smartSpacing 1 $ ThreeCol 1 (delta) (1/3))  -- three columns
+         ||| renamed [Replace "\x2505"] (smartSpacing mySpacing $ ThreeCol 1 (delta) (1/3))  -- three columns
   where
      tiled   = Tall nmaster delta ratio
      nmaster = 1

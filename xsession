@@ -11,6 +11,10 @@ if [[ -x "/usr/bin/compton" ]]; then
 fi
 
 # Wallpaper
+# To randomly switch wallpaper every hour, add a crontab:
+# env | grep -i display # get the name of the current display, e.g. DISPLAY=:0.0
+# crontab -e
+# 0 *    *   *   *     DISPLAY=:0.0 feh --bg-scale $(find /opt/gauthier/Pictures/wallpapers -type f |sort -R |head -1)
 if [[ -e "$HOME/wallpaper.jpg" && -x "/usr/bin/feh" ]]; then
     feh --bg-fill "$HOME/wallpaper.jpg"
 fi
@@ -61,5 +65,10 @@ if [[ -x "/usr/bin/unclutter" ]] ; then
     # unclutter starts a default version by itself, see (and modify) /etc/default/unclutter
     # -noevents is needed in order not to give focus to the window under the
     # possibly hidden cursor upon switching workspace.
-    unclutter -grab -noevents &
+    #unclutter -grab -noevents &
+
+    # Try without -grab to let xscreensaver use the mouse, and lock faster (otherwise it tries
+    # and fails to grab the mouse pointer, and times out).
+    # -grab was added earlier to "avoid erroneous focus changes", let's test and see.
+    unclutter -noevents &
 fi
