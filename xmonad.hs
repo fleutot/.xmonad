@@ -28,12 +28,25 @@ import Data.Ratio ((%))
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 myBorderWidth = 1
 myNormalBorderColor = "#363534"
-myFocusedBorderColor = "#dd4814"
+myFocusedBorderColor = "bisque3" -- "#dd4814"
+myUrgentBgColor = "#dd4814"
 myManageHook = composeAll
              [ className =? "Skype" --> doShift "6"
              , className =? "lcam-main" --> doFloat
              , manageDocks
              ]
+myTabConfig = defaultTheme { inactiveBorderColor = myNormalBorderColor
+            , inactiveColor = myNormalBorderColor
+            , inactiveTextColor = "bisque4"
+            , activeBorderColor = "bisque3"
+            , activeColor = "bisque3"
+            , activeTextColor = "grey10"
+            , urgentColor = myUrgentBgColor
+            , urgentTextColor = "grey10"
+            , urgentBorderColor = myUrgentBgColor
+            , fontName = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
+            , decoHeight = 16
+            }
 
 skypeLayout = IM.withIM (1%7) skypeRoster Grid
 skypeRoster = (IM.Title "g.ostervall_cipherstone.com - Skype™")
@@ -43,7 +56,7 @@ myLayout = renamed [Replace "\x25eb"] (smartSpacing mySpacing $ smartBorders $ R
          ||| renamed [Replace "Wide"] (smartSpacing mySpacing $ Mirror tiled)
          ||| renamed [Replace "\x25a1"] (smartBorders Full)
          ||| renamed [Replace "\x260f"] (smartSpacing 10 $ skypeLayout)  -- char
-         ||| renamed [Replace "Mastered Tabbed"] (multimastered 1 (delta) (ratio) $ simpleTabbed)
+         ||| renamed [Replace "Mastered Tabbed"] (multimastered 1 (delta) (ratio) $ tabbed shrinkText myTabConfig)
          ||| renamed [Replace "\x2505"] (smartSpacing mySpacing $ ThreeCol 1 (delta) (1/3))  -- three columns
   where
      tiled   = Tall nmaster delta ratio
@@ -68,7 +81,7 @@ main = do
                         , ppVisible = xmobarColor "grey20" "bisque4" . wrap " " " "
                         , ppHidden = xmobarColor "bisque4" "" . wrap " " " "
                         , ppHiddenNoWindows = xmobarColor "grey30" "" . wrap " " " "
-                        , ppUrgent = xmobarColor "black" "#dd4814" . wrap ">" "<"
+                        , ppUrgent = xmobarColor "black" myUrgentBgColor . wrap ">" "<"
                         , ppSort = getSortByXineramaRule
                         , ppLayout = xmobarColor "bisque3" ""
                         , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
