@@ -15,7 +15,7 @@ Config { font = "xft:terminus-9:size=9,Symbola:size=9"
        , fgColor = "bisque4"
 --       , alpha = 205  -- alpha does not work with background color under characters
        , position = TopW L 100
-       , lowerOnStart = True
+       , lowerOnStart = False
        , hideOnStart = False
        , allDesktops = True
        , border = NoBorder -- BottomBM 1

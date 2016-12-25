@@ -72,6 +72,7 @@ main = do
     xmonad $ withUrgencyHook NoUrgencyHook
            $ defaultConfig {
         workspaces = myWorkspaces
+        , terminal = "gnome-terminal"
         , manageHook = myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ smartBorders $ myLayout
         , logHook = dynamicLogWithPP xmobarPP
@@ -97,8 +98,8 @@ main = do
         , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
         , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
         , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
-        , ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set", "Master", "2+"] "" >>= dzenConfig return)
-        , ((mod4Mask .|. mod1Mask, xK_d), spawn "amixer set Master 2-" >>= showVol)
+        , ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set", "Master", "2%+"] "" >>= dzenConfig return)
+        , ((mod4Mask .|. mod1Mask, xK_d), spawn "amixer set Master 2%-" >>= showVol)
         -- focus urgent window
         , ((mod4Mask, xK_u), focusUrgent)
         , ((mod4Mask .|. shiftMask, xK_h), sendMessage MirrorShrink)
