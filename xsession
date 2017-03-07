@@ -5,9 +5,17 @@
 # Background pattern
 xsetroot -fg bisque3 -bg grey20 -mod 2 2 -rv
 
+# Compositor
+if [[ -x "/usr/bin/compton" ]]; then
+    compton --config "$HOME/.xmonad/compton.conf" &
+fi
+
 # Wallpaper
-if [[ -e "$HOME/wallpaper.jpg" && -x "/usr/bin/compton" && -x "/usr/bin/feh" ]]; then
-    compton --config "$HOME/compton.conf" &
+# To randomly switch wallpaper every hour, add a crontab:
+# env | grep -i display # get the name of the current display, e.g. DISPLAY=:0.0
+# crontab -e
+# 0 *    *   *   *     DISPLAY=:0.0 feh --bg-scale $(find /opt/gauthier/Pictures/wallpapers -type f |sort -R |head -1)
+if [[ -e "$HOME/wallpaper.jpg" && -x "/usr/bin/feh" ]]; then
     feh --bg-fill "$HOME/wallpaper.jpg"
 fi
 
@@ -16,6 +24,7 @@ trayer --edge top --align right --SetDockType true --SetPartialStrut true  --exp
 
 # Keyboard layout switcher
 setxkbmap -layout us,se -option 'grp:alt_shift_toggle' &
+
 # Per window keyboard layout
 kbdd
 
@@ -59,9 +68,13 @@ fi
 # fi
 
 if [[ -x "/usr/bin/unclutter" ]] ; then
+    # unclutter starts a default version by itself, see (and modify) /etc/default/unclutter
     # -noevents is needed in order not to give focus to the window under the
     # possibly hidden cursor upon switching workspace.
-    unclutter -grab -noevents &
+    # Try without -grab to let xscreensaver use the mouse, and lock faster (otherwise it tries
+    # and fails to grab the mouse pointer, and times out).
+    # -grab was added earlier to "avoid erroneous focus changes", let's test and see.
+    unclutter -noevents &
 fi
 
 nm-applet &
