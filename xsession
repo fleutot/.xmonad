@@ -36,15 +36,11 @@ if [[ -x "/usr/bin/emacs" ]] ; then
     emacs &
 fi
 
-<<<<<<< HEAD
 if [[ -x "/usr/bin/gnome-terminal" ]] ; then
     gnome-terminal &
 fi
 
-if [ -x /usr/bin/gnome-power-manager ] ; then
-=======
 if [[ -x "/usr/bin/gnome-power-manager" ]] ; then
->>>>>>> master
     sleep 3
     gnome-power-manager &
 elif [ -x /usr/bin/xfce4-power-manager ] ; then
@@ -65,7 +61,7 @@ fi
 if [[ -x "/usr/bin/unclutter" ]] ; then
     # -noevents is needed in order not to give focus to the window under the
     # possibly hidden cursor upon switching workspace.
-    # unclutter -grab -noevents &
+    unclutter -grab -noevents &
 fi
 
 nm-applet &
