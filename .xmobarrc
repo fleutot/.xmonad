@@ -25,7 +25,7 @@ Config { font = "xft:terminus-9:size=9,Symbola:size=9"
                     , Run Date "%a %_d %b %H:%M" "date" 10
                     , Run StdinReader
                     , Run Kbd [("se", "SE"), ("us", "US")]
-                    , Run Com "/media/cipherstone_data/home/gauthier/.xmonad/trayer-padding-icon.sh" [] "trayerpad" 10
+                    , Run Com "/home/gauthier/.xmonad/trayer-padding-icon.sh" [] "trayerpad" 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
