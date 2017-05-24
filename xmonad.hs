@@ -124,5 +124,5 @@ main = do
         , ((mod4Mask .|. controlMask, xK_j), rotAllUp)
         , ((mod4Mask .|. controlMask, xK_k), rotAllDown)
         -- Dmenu with options
-        , ((mod4Mask, xK_p), spawn "dmenu_run -fn -*-terminus-*-r-*-*-12-*-*-*-*-*-*-* -nb bisque3 -nf grey35 -sb bisque1 -sf grey10")
+        , ((mod4Mask, xK_p), spawn "dmenu_run -fn -*-terminus-*-r-*-*-14-*-*-*-*-*-*-* -nb bisque3 -nf grey35 -sb bisque1 -sf grey10")
         ]

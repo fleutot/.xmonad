@@ -14,7 +14,7 @@ fi
 # To randomly switch wallpaper every hour, add a crontab:
 # env | grep -i display # get the name of the current display, e.g. DISPLAY=:0.0
 # crontab -e
-# 0 *    *   *   *     DISPLAY=:0.0 feh --bg-scale $(find /opt/gauthier/Pictures/wallpapers -type f |sort -R |head -1)
+# 0 *    *   *   *     DISPLAY=:0.0 feh --bg-fill $(find /opt/gauthier/Pictures/wallpapers -type f |sort -R |head -1)
 if [[ -e "$HOME/wallpaper.jpg" && -x "/usr/bin/feh" ]]; then
     feh --bg-fill "$HOME/wallpaper.jpg"
 fi
@@ -23,8 +23,10 @@ fi
 trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --widthtype request --transparent true --alpha 0 --tint 0x333333 --height 16 --monitor 1 &
 
 # Keyboard layout switcher
-setxkbmap -layout us,se -option 'grp:alt_shift_toggle' &
-
+# alt_shift_toggle stopped working (switching on press instead of release, breaking shortcuts with alt+shift).
+# alt_caps might be better anyway, preventing rogue presses in eg emacs (M-< and M->).
+#setxkbmap -layout us,us,se -variant ,dvp, -option 'grp:alt_caps_toggle' &
+setxkbmap -layout us,se -variant -option 'grp:alt_caps_toggle' &
 # Per window keyboard layout
 kbdd
 
