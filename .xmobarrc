@@ -9,8 +9,7 @@
 
 
 -- The xft font renders non vertically centered on the bar, ugly. Xlfd (the one with -*-*-...) works better.
---Config { font = "xft:terminus-9:pixelsize=12"
-Config { font = "-*-terminus-*-r-*-*-12-*-*-*-*-*-*-*"
+Config { font = "xft:terminus-9:size=9,Symbola:size=9"
        , bgColor = "grey15"
        , fgColor = "#8e5825"
 --       , alpha = 205  -- alpha does not work with background color under characters
