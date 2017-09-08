@@ -45,5 +45,5 @@ Config { font = "xft:terminus-9:size=9,Symbola:size=9"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ <fc=#f09f52>|</fc> %battery% · %cpu% · %memory% · <fc=#f09f52>%date%</fc> · %kbd% <fc=#f09f52>|</fc> %trayerpad% "
+       , template = "%StdinReader% }{ <fc=#f09f52>|</fc> %battery% · %cpu% · %memory% · <fc=#f09f52>%date%</fc> · %kbd% <fc=#f09f52>|</fc> %trayerpad%"
        }

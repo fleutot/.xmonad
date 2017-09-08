@@ -2,8 +2,21 @@
 # By default, xmonad looks for this in ~/.xmonad/xmonad-session-rc.
 # If this file does not exist, create it, or a link to this content.
 
-# Background pattern
-xsetroot -fg bisque3 -bg grey20 -mod 2 2 -rv
+# Deal with default multi-monitor config
+# Set awk Output Record Separator to one space, since records are separated by \n by
+# default (unlike fields).
+ALL_MONITORS_STR=$(xrandr --current | grep " connected " | awk 'BEGIN { ORS = " "}; {print $1}' )
+read -r -a ALL_MONITORS <<< "$ALL_MONITORS_STR"
+NB_CONNECT_OUTPUT="${#ALL_MONITORS[@]}"
+MONITOR_LAPTOP=${ALL_MONITORS[0]}
+MONITOR_LEFT=${ALL_MONITORS[1]}
+MONITOR_RIGHT=${ALL_MONITORS[2]}
+if [ $NB_CONNECT_OUTPUT == 3 ] ; then
+    xrandr \
+        --output $MONITOR_LEFT --pos 0x0 --auto --primary \
+        --output $MONITOR_RIGHT --right-of $MONITOR_LEFT --auto \
+        --output $MONITOR_LAPTOP --auto --pos 960x1200
+fi
 
 # Compositor
 if [[ -x "/usr/bin/compton" ]]; then
@@ -15,18 +28,22 @@ fi
 # env | grep -i display # get the name of the current display, e.g. DISPLAY=:0.0
 # crontab -e
 # 0 *    *   *   *     DISPLAY=:0.0 feh --bg-fill $(find /opt/gauthier/Pictures/wallpapers -type f |sort -R |head -1)
-if [[ -e "$HOME/wallpaper.jpg" && -x "/usr/bin/feh" ]]; then
+if hash wallpaper_random_set.sh ; then
+    $HOME/bin/wallpaper_random_set.sh
+elif [[ -f "$HOME/wallpaper.jpg" ]] && hash feh ; then
     feh --bg-fill "$HOME/wallpaper.jpg"
 fi
 
 # Tray for skype and other icons
-trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --widthtype request --transparent true --alpha 0 --tint 0x333333 --height 16 --monitor 1 &
+trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --widthtype request --transparent true --alpha 0 --tint 0x333333 --height 16 --monitor 0 &
 
 # Keyboard layout switcher
 # alt_shift_toggle stopped working (switching on press instead of release, breaking shortcuts with alt+shift).
 # alt_caps might be better anyway, preventing rogue presses in eg emacs (M-< and M->).
 #setxkbmap -layout us,us,se -variant ,dvp, -option 'grp:alt_caps_toggle' &
-setxkbmap -layout us,se -variant -option 'grp:alt_caps_toggle' &
+
+setxkbmap -layout us,se -option 'grp:alt_caps_toggle'
+
 # Per window keyboard layout
 kbdd
 
@@ -80,3 +97,12 @@ if [[ -x "/usr/bin/unclutter" ]] ; then
 fi
 
 nm-applet &
+
+if [[ -x "/usr/bin/hipchat4" ]] ; then
+    /usr/bin/hipchat4 &
+fi
+
+# Testing this syntax, to be continued...
+if hash gnome-pomodoro ; then
+    gnome-pomodoro &
+fi
