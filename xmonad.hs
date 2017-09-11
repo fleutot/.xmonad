@@ -1,5 +1,6 @@
 import XMonad hiding ((|||))
 import XMonad.Actions.RotSlaves
+import XMonad.Actions.UpdateFocus
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
@@ -111,12 +112,14 @@ myKeys =
          , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 main = do
-    xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/.xmobarrc -x 0"
-    --xmproc <- spawnPipe "~/.cabal/bin/xmobar ~/.xmonad/.xmobarrc -x 1"
-    xmonad $ withUrgencyHook NoUrgencyHook
-           $ defaultConfig {
+  xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/.xmobarrc -x 0"
+  xmonad
+    $ withUrgencyHook NoUrgencyHook
+    $ defaultConfig {
         workspaces = myWorkspaces
         , terminal = "gnome-terminal"
+        , startupHook = adjustEventInput
+        , handleEventHook = focusOnMouseMove
         , manageHook = myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ smartBorders $ myLayout
         , logHook = dynamicLogWithPP xmobarPP
