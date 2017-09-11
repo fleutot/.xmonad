@@ -107,8 +107,8 @@ myKeys =
        ++
        --  for changing order of monitor output key
        [((m .|. mod4Mask, key), screenWorkspace sc >>= flip whenJust (windows . f)) -- Replace 'mod1Mask' with your mod key of choice.
-       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0,2,1] -- was [0..] *** change to match your screen order ***
-       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0,2,1] -- was [0..] *** change to match your screen order ***
+         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 main = do
     xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/.xmobarrc -x 0"
