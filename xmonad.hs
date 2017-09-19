@@ -1,6 +1,5 @@
 import XMonad hiding ((|||))
 import XMonad.Actions.RotSlaves
-import XMonad.Actions.UpdateFocus
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
@@ -56,7 +55,7 @@ myTabConfig = defaultTheme { inactiveBorderColor = myNormalBorderColor
 -- skypeLayout = IM.withIM (1%7) skypeRoster Grid
 
 skypeRoster = (IM.Title "gauthier.fleutot - Skype™")
-mySpacing = 5
+mySpacing = 7
 
 myLayout = renamed [Replace "\x25eb"] (smartSpacing mySpacing $ smartBorders $ ResizableTall 1 (delta) (ratio) [])
          ||| renamed [Replace "Wide"] (smartSpacing mySpacing $ Mirror tiled)
@@ -86,8 +85,8 @@ myKeys =
        , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
        , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
        , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
-       , ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set", "Master", "5%+"] "" >>= dzenConfig return)
-       , ((mod4Mask .|. mod1Mask, xK_d), spawn "amixer set Master 5%-" >>= showVol)
+       , ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set", "Master", "3%+"] "" >>= dzenConfig return)
+       , ((mod4Mask .|. mod1Mask, xK_d), spawn "amixer set Master 3%-" >>= showVol)
        -- focus urgent window
        , ((mod4Mask, xK_u), focusUrgent)
        , ((mod4Mask .|. shiftMask, xK_h), sendMessage MirrorShrink)
@@ -134,19 +133,17 @@ main = do
     $ defaultConfig {
         workspaces = myWorkspaces
         , terminal = "gnome-terminal"
-        , startupHook = adjustEventInput
-        , handleEventHook = focusOnMouseMove
         , manageHook = myManageHook <+> manageHook defaultConfig
         , layoutHook = avoidStruts $ smartBorders $ myLayout
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
                         , ppTitle = xmobarColor color_lo_2 "" . shorten 80
-                        , ppCurrent = xmobarColor color_hi_2 "" . wrap " " " "
-                        , ppVisible = xmobarColor color_bg color_hi_1 . wrap " " " "
-                        , ppHidden = xmobarColor color_lo_1 "" . wrap " " " "
-                        , ppHiddenNoWindows = xmobarColor color_lo_2 "" . wrap " " " "
+                        , ppCurrent = xmobarColor color_hi_2 "" . wrap " " " " -- color_bg color_fg . wrap " " " "
+                        , ppVisible = xmobarColor color_lo_2 "" . wrap " " " " -- color_bg color_lo_2 . wrap " " " "
+                        , ppHidden = const "" --xmobarColor color_lo_1 "" . wrap " " " "
+                        , ppHiddenNoWindows = const "" --xmobarColor color_lo_2 "" . wrap " " " "
                         , ppUrgent = xmobarColor "black" "#dd4814" . wrap ">" "<"
-                        -- , ppSort = getSortByXineramaRule
+                        , ppSort = getSortByXineramaRule
                         , ppLayout = xmobarColor color_fg ""
                         , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
                         , ppSep = "  ·  " -- if the font has it: " ║ "
