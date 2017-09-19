@@ -23,6 +23,7 @@ import XMonad.Util.Run(spawnPipe, runProcessWithInput)
 import XMonad.Util.WorkspaceCompare
 
 import qualified XMonad.StackSet as W
+import qualified Data.Map        as M
 
 import System.IO
 import Data.Ratio ((%))
@@ -104,12 +105,27 @@ myKeys =
        , ((mod4Mask .|. controlMask, xK_k), rotAllDown)
        -- Dmenu with options
        , ((mod4Mask, xK_p), spawn "dmenu_run -fn -*-terminus-*-r-*-*-14-*-*-*-*-*-*-* -nb bisque3 -nf grey35 -sb bisque1 -sf grey10")
+       -- Let the mouseModMask modifier re-tile a window, since my right hand is probably on my mouse.
+       , ((mouseModMask, xK_t), withFocused $ windows . W.sink)
        ]
        ++
        --  for changing order of monitor output key
        [((m .|. mod4Mask, key), screenWorkspace sc >>= flip whenJust (windows . f)) -- Replace 'mod1Mask' with your mod key of choice.
          | (key, sc) <- zip [xK_w, xK_e, xK_r] [0,2,1] -- was [0..] *** change to match your screen order ***
          , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+
+-- This makes the mouse bindings use Alt instead of Super. mod4mask is on my
+-- right hand, thus making it hard to use together with the mouse.
+mouseModMask    = mod1Mask
+myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
+    -- mod-button1, Set the window to floating mode and move by dragging
+    [ ((mouseModMask, button1), (\w -> focus w >> mouseMoveWindow w))
+    -- mod-button2, Raise the window to the top of the stack
+    , ((mouseModMask, button2), (\w -> focus w >> windows W.swapMaster))
+    -- mod-button3, Set the window to floating mode and resize by dragging
+    , ((mouseModMask, button3), (\w -> focus w >> mouseResizeWindow w))
+    -- you may also bind events to the mouse scroll wheel (button4 and button5)
+    ]
 
 main = do
   xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/.xmobarrc -x 0"
@@ -139,4 +155,5 @@ main = do
         , borderWidth = myBorderWidth
         , normalBorderColor  = myNormalBorderColor
         , focusedBorderColor = myFocusedBorderColor
+        , mouseBindings      = myMouseBindings
         } `additionalKeys` myKeys
