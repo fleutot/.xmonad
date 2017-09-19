@@ -12,11 +12,11 @@
 Config { font = "xft:terminus-9:size=9,Symbola:size=9"
        , bgColor = "grey15"
        , fgColor = "#8e5825"
---       , alpha = 205  -- alpha does not work with background color under characters
+       -- , alpha = 0  -- alpha does not work with background color under characters. It's also hard to make readable for several wallpapers.
        , position = TopW L 100
-       , lowerOnStart = True
+       , lowerOnStart = True -- To make toggle strut display windows above xmobar
        , hideOnStart = False
-       , allDesktops = True
+       , allDesktops = False
        , border = NoBorder -- BottomBM 1
        , commands = [ Run Cpu ["-t","Cpu <total>%","-L","3","-H","50","--normal","#547D5D","--high","coral3"] 10
                     --, Run Weather "ESGP" ["-t"," <tempC>°C","-L","0","-H","25","--normal","#547D5D","--high","coral3","--low","cadetblue3"] 36000
