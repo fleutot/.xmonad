@@ -28,7 +28,7 @@ fi
 # env | grep -i display # get the name of the current display, e.g. DISPLAY=:0.0
 # crontab -e
 # 0 *    *   *   *     DISPLAY=:0.0 feh --bg-fill $(find /opt/gauthier/Pictures/wallpapers -type f |sort -R |head -1)
-if hash wallpaper_random_set.sh ; then
+if type wallpaper_random_set.sh ; then
     $HOME/bin/wallpaper_random_set.sh
 elif [[ -f "$HOME/wallpaper.jpg" ]] && hash feh ; then
     feh --bg-fill "$HOME/wallpaper.jpg"
@@ -48,45 +48,37 @@ setxkbmap -layout us,se -option 'grp:alt_caps_toggle'
 kbdd
 
 # Startup apps
-xscreensaver -nosplash &
 
-sleep 1
-
-if [[ -x "/usr/bin/gmail-notify" ]] ; then
-    gmail-notify &
+if type xscreensaver ; then
+    xscreensaver -nosplash &
 fi
 
-if [[ -x "/usr/bin/dropbox" ]] ; then
+if type dropbox ; then
     dropbox start
 fi
 
-if [[ -x "/usr/bin/emacs" ]] ; then
+if type emacs ; then
     emacs &
 fi
 
-if [[ -x "/usr/bin/gnome-terminal" ]] ; then
+if type gnome-terminal ; then
     gnome-terminal &
 fi
 
-if [[ -x "/usr/bin/gnome-power-manager" ]] ; then
+if type gnome-power-manager ; then
     sleep 3
     gnome-power-manager &
-elif [ -x /usr/bin/xfce4-power-manager ] ; then
+elif type xfce4-power-manager ; then
     sleep 2
     # This might require superuser in order to allow hibernate.
     sudo xfce4-power-manager &
-fi
-
-if [[ -x "/usr/bin/skype" ]] ; then
-    sleep 3
-    skype &
 fi
 
 # if [[ -x "/opt/thefanclub/grive-tools/grive-indicator" ]] ; then
 #     /opt/thefanclub/grive-tools/grive-indicator &
 # fi
 
-if [[ -x "/usr/bin/unclutter" ]] ; then
+if type unclugger ; then
     # unclutter starts a default version by itself, see (and modify) /etc/default/unclutter
     # -noevents is needed in order not to give focus to the window under the
     # possibly hidden cursor upon switching workspace.
@@ -98,11 +90,11 @@ fi
 
 nm-applet &
 
-if [[ -x "/usr/bin/hipchat4" ]] ; then
-    /usr/bin/hipchat4 &
+if type hipchat4 ; then
+    hipchat4 &
 fi
 
 # Testing this syntax, to be continued...
-if hash gnome-pomodoro ; then
+if type gnome-pomodoro ; then
     gnome-pomodoro &
 fi
