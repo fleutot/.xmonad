@@ -90,8 +90,13 @@ fi
 
 nm-applet &
 
-if type hipchat4 ; then
-    hipchat4 &
+# Hipchat client not working, some troubles with QT. Use Franz instead
+# if type hipchat4 ; then
+#     hipchat4 &
+# fi
+
+if type franz ; then
+    franz &
 fi
 
 # Testing this syntax, to be continued...

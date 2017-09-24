@@ -30,7 +30,7 @@ import Data.Ratio ((%))
 --myWorkspaces = ["1.edit", "2.term", "3.doc", "4.mail", "5.www", "6.chat", "7.priv", "8.media", "9.admin"]
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 myBorderWidth = 2
-myNormalBorderColor = "bisque4"
+myNormalBorderColor = "#37322a"
 myFocusedBorderColor = "#dd4814"
 myUrgentBgColor = "#dd4814"
 myManageHook = composeAll
@@ -87,6 +87,9 @@ myKeys =
        , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
        , ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set", "Master", "3%+"] "" >>= dzenConfig return)
        , ((mod4Mask .|. mod1Mask, xK_d), spawn "amixer set Master 3%-" >>= showVol)
+       , ((0, 0x1008ff02), spawn "sudo sysbacklight up") -- keysym found with xev
+       , ((0, 0x1008ff03), spawn "sudo sysbacklight down")  -- keysym found with xev
+       , ((mod4Mask .|. mod1Mask, xK_n), spawn "sudo sysbacklight down")
        -- focus urgent window
        , ((mod4Mask, xK_u), focusUrgent)
        , ((mod4Mask .|. shiftMask, xK_h), sendMessage MirrorShrink)
