@@ -21,6 +21,8 @@ import XMonad.Util.Replace
 import XMonad.Util.Run(spawnPipe, runProcessWithInput)
 import XMonad.Util.WorkspaceCompare
 
+import System.Environment
+
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
@@ -152,6 +154,7 @@ main = do
                         , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
                         , ppSep = "  ·  " -- if the font has it: " ║ "
                         }
+                        <+> io (setEnv "_JAVA_AWT_WM_NONREPARENTING" "1") -- Test if this is set after a restart.
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
         , borderWidth = myBorderWidth
         , normalBorderColor  = myNormalBorderColor
