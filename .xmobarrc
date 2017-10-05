@@ -7,7 +7,6 @@
 -- sudo apt-get install libasound2-dev
 -- cabal install xmobar --flags="all_extensions"
 
-
 -- The xft font renders non vertically centered on the bar, ugly. Xlfd (the one with -*-*-...) works better.
 Config { font = "xft:terminus-9:size=9,Symbola:size=9"
        , bgColor = "grey15"
@@ -26,7 +25,6 @@ Config { font = "xft:terminus-9:size=9,Symbola:size=9"
                              , "--low"      , "darkorange"
                              , "--normal"   , "#8e5825"
                              , "--high"     , "#547D5D"
-
                              , "--" -- battery specific options
                                        -- status location
                                        , "-f"   , "AC0/online"
@@ -40,10 +38,12 @@ Config { font = "xft:terminus-9:size=9,Symbola:size=9"
                     , Run Memory ["-t","Mem <usedratio>%", "-w", "3" ] 10
                     , Run Date "%a %_d %b %H:%M" "date" 10
                     , Run StdinReader
-                    , Run Kbd [("se", "SE"), ("us", "US")]
+                    --, Run Kbd [("se", "SE"), ("us", "US")]
                     , Run Com "/home/gauthier/.xmonad/trayer-padding-icon.sh" [] "trayerpad" 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ <fc=#f09f52>|</fc> %battery% · %cpu% · %memory% · <fc=#f09f52>%date%</fc> · %kbd% <fc=#f09f52>|</fc> %trayerpad%"
+       --, template = "%StdinReader% }{ <fc=#f09f52>|</fc> %battery% · %cpu% · %memory% · <fc=#f09f52>%date%</fc> · %kbd% <fc=#f09f52>|</fc> %trayerpad%"
+       -- Removing keyboard layout since currently using single layout with two groups (and investigating why xmobar crashes and freezes).
+       , template = "%StdinReader% }{ | %battery% · %cpu% · %memory% · <fc=#f09f52>%date%</fc> | %trayerpad%"
        }
