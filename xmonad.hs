@@ -79,7 +79,9 @@ color_hi_2 = "#ffd6b0"
 color_hi_1 = "#ffc38a"
 color_lo_1 = "#cd7d20"
 color_lo_2 = "#8e5825"
-color_bg   = "black"
+color_bg   = "grey15"
+
+launcherString = "rofi -show drun -config $HOME/.xmonad/rofi.conf"
 
 myKeys =
        [
@@ -108,8 +110,8 @@ myKeys =
        -- Rotate windows while keeping focus
        , ((mod4Mask .|. controlMask, xK_j), rotAllUp)
        , ((mod4Mask .|. controlMask, xK_k), rotAllDown)
-       -- Dmenu with options
-       , ((mod4Mask, xK_p), spawn "dmenu_run -fn -*-terminus-*-r-*-*-14-*-*-*-*-*-*-* -nb bisque3 -nf grey35 -sb bisque1 -sf grey10")
+       -- Launcher
+       , ((mod4Mask, xK_p), spawn launcherString)
        -- Let the mouseModMask modifier re-tile a window, since my right hand is probably on my mouse.
        , ((mouseModMask, xK_t), withFocused $ windows . W.sink)
        ]
