@@ -78,7 +78,7 @@ fi
 #     /opt/thefanclub/grive-tools/grive-indicator &
 # fi
 
-if type unclugger ; then
+if type unclutter ; then
     # unclutter starts a default version by itself, see (and modify) /etc/default/unclutter
     # -noevents is needed in order not to give focus to the window under the
     # possibly hidden cursor upon switching workspace.

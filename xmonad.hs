@@ -36,6 +36,7 @@ myUrgentBgColor = "#dd4814"
 myManageHook = composeAll
                [ className =? "Skype" --> doShift "6"
              , className =? "HipChat" --> doShift "6"
+             , className =? "Franz" --> doShift "6"
              , className =? "lcam-main" --> doFloat
              , manageDocks
              ]

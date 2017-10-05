@@ -18,7 +18,7 @@ Config { font = "xft:terminus-9:size=9,Symbola:size=9"
        , hideOnStart = False
        , allDesktops = False
        , border = NoBorder -- BottomBM 1
-       , commands = [ Run Cpu ["-t","Cpu <total>%","-L","3","-H","50","--normal","#547D5D","--high","coral3"] 10
+       , commands = [ Run Cpu ["-t","Cpu <total>%","-L","3","-H","50","--normal","#547D5D","--high","coral3", "-w", "2" ] 10
                     --, Run Weather "ESGP" ["-t"," <tempC>°C","-L","0","-H","25","--normal","#547D5D","--high","coral3","--low","cadetblue3"] 36000
                     , Run Battery        [ "--template" , "Batt: <acstatus>"
                              , "--Low"      , "10"        -- units: %
@@ -37,7 +37,7 @@ Config { font = "xft:terminus-9:size=9,Symbola:size=9"
                                        -- charged status
                                        , "-i"	, "<fc=#547D5D>AC</fc> (max)"
                              ] 50
-                    , Run Memory ["-t","Mem <usedratio>%"] 10
+                    , Run Memory ["-t","Mem <usedratio>%", "-w", "3" ] 10
                     , Run Date "%a %_d %b %H:%M" "date" 10
                     , Run StdinReader
                     , Run Kbd [("se", "SE"), ("us", "US")]
