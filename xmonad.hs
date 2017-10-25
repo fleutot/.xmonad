@@ -1,5 +1,6 @@
 import XMonad hiding ((|||))
 import XMonad.Actions.RotSlaves
+import XMonad.Actions.UpdatePointer
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
@@ -156,6 +157,7 @@ main = do
                         , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
                         , ppSep = "  ·  " -- if the font has it: " ║ "
                         }
+                        >> updatePointer(0.75, 0.75) (0, 0)
                         <+> io (setEnv "_JAVA_AWT_WM_NONREPARENTING" "1") -- Test if this is set after a restart.
         , modMask = mod4Mask     -- Rebind Mod to the Windows key
         , borderWidth = myBorderWidth
