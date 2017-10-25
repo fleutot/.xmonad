@@ -51,6 +51,11 @@ fi
 # Per window keyboard layout
 kbdd
 
+# Java applications don't detect xmonad as a non-reparenting WM, resulting in grey empty windows.
+# (under investigation, this might have to move to ~/.bashrc)
+#Trying to do that in xmonad.hs, check after restart and remove this if setting from xmonad.hs worked.
+#export _JAVA_AWT_WM_NONREPARENTING=1
+
 # Startup apps
 
 if type xscreensaver ; then

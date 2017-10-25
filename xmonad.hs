@@ -44,7 +44,7 @@ myManageHook = composeAll
              ]
 myTabConfig = defaultTheme { inactiveBorderColor = myNormalBorderColor
             , inactiveColor = myNormalBorderColor
-            , inactiveTextColor = "grey10"
+            , inactiveTextColor = "grey45"
             , activeBorderColor = "bisque3"
             , activeColor = "bisque3"
             , activeTextColor = "grey10"
@@ -56,14 +56,14 @@ myTabConfig = defaultTheme { inactiveBorderColor = myNormalBorderColor
             }
 
 -- skypeLayout = IM.withIM (1%7) skypeRoster Grid
-
 skypeRoster = (IM.Title "gauthier.fleutot - Skype™")
+
 mySpacing = 7
 
 myLayout = renamed [Replace "\x25eb"] (smartSpacing mySpacing $ smartBorders $ ResizableTall 1 (delta) (ratio) [])
          ||| renamed [Replace "Wide"] (smartSpacing mySpacing $ Mirror tiled)
          ||| renamed [Replace "\x25a1"] (smartBorders Full)
-	 ||| renamed [Replace "\x260f"] (smartSpacing 10 $ GridRatio (3/1))  -- char
+         ||| renamed [Replace "\x260f"] (smartSpacing 10 $ GridRatio (3/1))
          ||| renamed [Replace "Mastered Tabbed"] (multimastered 1 (delta) (ratio) $ tabbed shrinkText myTabConfig)
          ||| renamed [Replace "\x2505"] (smartSpacing mySpacing $ ThreeCol 1 (delta) (1/3))  -- three columns
   where
@@ -118,7 +118,7 @@ myKeys =
        ++
        --  for changing order of monitor output key
        [((m .|. mod4Mask, key), screenWorkspace sc >>= flip whenJust (windows . f)) -- Replace 'mod1Mask' with your mod key of choice.
-         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0,2,1] -- was [0..] *** change to match your screen order ***
+         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0,2,1] --  [0..] *** change to match your screen order *** This doesn't seem too stable, after restarts...
          , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 -- This makes the mouse bindings use Alt instead of Super. mod4mask is on my
