@@ -18,6 +18,12 @@ if [ $NB_CONNECT_OUTPUT == 3 ] ; then
         --output $MONITOR_LAPTOP --auto --pos 960x1200
 fi
 
+GTK_THEME=Equilux-compact
+export GTK_THEME
+
+GTK2_RC_FILES=/usr/share/themes/Equilux-compact/gtk-2.0/gtkrc
+export GTK2_RC_FILES
+
 # Compositor
 if [[ -x "/usr/bin/compton" ]]; then
     compton --config "$HOME/.xmonad/compton.conf" &
@@ -40,7 +46,9 @@ trayer --edge top --align right --SetDockType true --SetPartialStrut true  --exp
 # Keyboard layout switcher
 if [[ -f $HOME/kinesis/kinesis_swe_us.conf ]]; then
     # See https://github.com/fleutot/kinesis
-    xkbcomp -i 3 $HOME/kinesis/kinesis_swe_us.conf $DISPLAY
+    #xkbcomp -i 3 $HOME/kinesis/kinesis_swe_us.conf $DISPLAY
+    # The commented row above did not work at startup. Maybe $DISPLAY cannot be used too early?
+    xkbcomp -i 3 $HOME/kinesis/kinesis_swe_us.conf :0
 else
     # alt_shift_toggle stopped working (switching on press instead of release, breaking shortcuts with alt+shift).
     # alt_caps might be better anyway, preventing rogue presses in eg emacs (M-< and M->).
@@ -88,16 +96,26 @@ fi
 # fi
 
 if type unclutter ; then
-    # unclutter starts a default version by itself, see (and modify) /etc/default/unclutter
+    # unclutter starts a default version by itself, see (and modify)
+    # /etc/default/unclutter
     # -noevents is needed in order not to give focus to the window under the
-    # possibly hidden cursor upon switching workspace.
-    # Try without -grab to let xscreensaver use the mouse, and lock faster (otherwise it tries
-    # and fails to grab the mouse pointer, and times out).
-    # -grab was added earlier to "avoid erroneous focus changes", let's test and see.
+    # possibly hidden cursor upon switching workspace.  Try without -grab to let
+    # xscreensaver use the mouse, and lock faster (otherwise it tries and fails
+    # to grab the mouse pointer, and times out).  -grab was added earlier to
+    # "avoid erroneous focus changes", let's test and see.
+    # First try to run unclutter from apt. If it doesn't work (-noevents not
+    # supported), try the other one.
     unclutter -noevents &
+
+    if ! pgrep unclutter ; then
+        # --ignore-scrolling doesn't seem to work.
+        unclutter --timeout 1 --ignore-scrolling&
+    fi
 fi
 
-nm-applet &
+if type nm-applet ; then
+    nm-applet &
+fi
 
 # Hipchat client not working, some troubles with QT. Use Franz instead
 # if type hipchat4 ; then
@@ -108,7 +126,6 @@ if type franz ; then
     franz &
 fi
 
-# Testing this syntax, to be continued...
-if type gnome-pomodoro ; then
-    gnome-pomodoro &
-fi
+# Make ssh-agent prompt for key passphrase once and for all.
+# Problem: this does not seem to prompt for password, can it really be run from this file?
+ssh-add

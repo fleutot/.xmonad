@@ -41,6 +41,8 @@ myManageHook = composeAll
              , className =? "HipChat" --> doShift "6"
              , className =? "Franz" --> doShift "6"
              , className =? "lcam-main" --> doFloat
+             , className =? "Saleae Logic Software" --> doF (W.shift "5")
+             , className =? "Logic" --> doIgnore
              , manageDocks
              ]
 myTabConfig = defaultTheme { inactiveBorderColor = myNormalBorderColor
@@ -59,7 +61,7 @@ myTabConfig = defaultTheme { inactiveBorderColor = myNormalBorderColor
 -- skypeLayout = IM.withIM (1%7) skypeRoster Grid
 skypeRoster = (IM.Title "gauthier.fleutot - Skype™")
 
-mySpacing = 7
+mySpacing = 0 -- gaps
 
 myLayout = renamed [Replace "\x25eb"] (smartSpacing mySpacing $ smartBorders $ ResizableTall 1 (delta) (ratio) [])
          ||| renamed [Replace "Wide"] (smartSpacing mySpacing $ Mirror tiled)
@@ -82,25 +84,24 @@ color_lo_1 = "#cd7d20"
 color_lo_2 = "#8e5825"
 color_bg   = "grey15"
 
-launcherString = "rofi -show drun -config $HOME/.xmonad/rofi.conf"
+launcherString = "rofi -show combi -combi-modi \"drun,run\" -modi \"drun,run,ssh\" -config $HOME/.xmonad/rofi.conf"
 
 myKeys =
        [
-       ((mod4Mask .|. controlMask, xK_l), spawn "xscreensaver-command -lock")
+       --((mod4Mask .|. controlMask, xK_l), spawn "xscreensaver-command -lock")
+         ((mod4Mask .|. controlMask, xK_l), spawn "lock --pixelate --no-text")
        , ((mod4Mask .|. controlMask, xK_z), spawn "xscreensaver-command -lock ; sudo pm-suspend --quirk-dpms-on")
-       , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
-       , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
-       , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshot_%Y-%m-%d_%H:%M:%S.png")
+       , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
+       , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
+       , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
        , ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set", "Master", "3%+"] "" >>= dzenConfig return)
        , ((mod4Mask .|. mod1Mask, xK_d), spawn "amixer set Master 3%-" >>= showVol)
        , ((0, 0x1008ff02), spawn "sudo sysbacklight up") -- keysym found with xev
        , ((0, 0x1008ff03), spawn "sudo sysbacklight down")  -- keysym found with xev
-       , ((mod4Mask .|. mod1Mask, xK_n), spawn "sudo sysbacklight down")
-       -- focus urgent window
-       , ((mod4Mask, xK_u), focusUrgent)
+       , ((mod4Mask, xK_u), focusUrgent)        -- focus urgent window
        , ((mod4Mask .|. shiftMask, xK_h), sendMessage MirrorShrink)
        , ((mod4Mask .|. shiftMask, xK_l), sendMessage MirrorExpand)
-       , ((controlMask .|. mod1Mask, xK_equal), kill)
+       , ((controlMask .|. mod4Mask, xK_equal), kill)
        , ((mod4Mask, xK_z), sendMessage (JumpToLayout "\x25eb"))
        , ((mod4Mask, xK_x), sendMessage (JumpToLayout "Wide"))
        , ((mod4Mask, xK_f), sendMessage (JumpToLayout "\x25a1"))
@@ -114,7 +115,7 @@ myKeys =
        -- Launcher
        , ((mod4Mask, xK_p), spawn launcherString)
        -- Let the mouseModMask modifier re-tile a window, since my right hand is probably on my mouse.
-       , ((mouseModMask, xK_t), withFocused $ windows . W.sink)
+       --, ((mouseModMask, xK_t), withFocused $ windows . W.sink)
        ]
        ++
        --  for changing order of monitor output key
@@ -122,18 +123,19 @@ myKeys =
          | (key, sc) <- zip [xK_w, xK_e, xK_r] [0,2,1] --  [0..] *** change to match your screen order *** This doesn't seem too stable, after restarts...
          , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
+-- Commented out while trying mod4mask on left hand. Search for myMouseBindings in this file.
 -- This makes the mouse bindings use Alt instead of Super. mod4mask is on my
 -- right hand, thus making it hard to use together with the mouse.
-mouseModMask    = mod1Mask
-myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
-    -- mod-button1, Set the window to floating mode and move by dragging
-    [ ((mouseModMask, button1), (\w -> focus w >> mouseMoveWindow w))
-    -- mod-button2, Raise the window to the top of the stack
-    , ((mouseModMask, button2), (\w -> focus w >> windows W.swapMaster))
-    -- mod-button3, Set the window to floating mode and resize by dragging
-    , ((mouseModMask, button3), (\w -> focus w >> mouseResizeWindow w))
-    -- you may also bind events to the mouse scroll wheel (button4 and button5)
-    ]
+--mouseModMask    = mod1Mask
+--myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
+--    -- mod-button1, Set the window to floating mode and move by dragging
+--    [ ((mouseModMask, button1), (\w -> focus w >> mouseMoveWindow w))
+--    -- mod-button2, Raise the window to the top of the stack
+--    , ((mouseModMask, button2), (\w -> focus w >> windows W.swapMaster))
+--    -- mod-button3, Set the window to floating mode and resize by dragging
+--    , ((mouseModMask, button3), (\w -> focus w >> mouseResizeWindow w))
+--    -- you may also bind events to the mouse scroll wheel (button4 and button5)
+--    ]
 
 main = do
   xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/.xmobarrc -x 0"
@@ -147,13 +149,13 @@ main = do
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
                         , ppTitle = xmobarColor color_lo_2 "" . shorten 80
-                        , ppCurrent = xmobarColor color_hi_2 "" . wrap " " " " -- color_bg color_fg . wrap " " " "
+                        , ppCurrent = xmobarColor color_fg "" . wrap " " " " -- color_bg color_fg . wrap " " " "
                         , ppVisible = xmobarColor color_lo_2 "" . wrap " " " " -- color_bg color_lo_2 . wrap " " " "
                         , ppHidden = const "" --xmobarColor color_lo_1 "" . wrap " " " "
                         , ppHiddenNoWindows = const "" --xmobarColor color_lo_2 "" . wrap " " " "
                         , ppUrgent = xmobarColor "black" "#dd4814" . wrap ">" "<"
                         , ppSort = getSortByXineramaRule
-                        , ppLayout = xmobarColor color_fg ""
+                        , ppLayout = xmobarColor color_lo_2 ""
                         , ppWsSep = "" -- if the font has it: " │ ". See .xmobarrc template as well.
                         , ppSep = "  ·  " -- if the font has it: " ║ "
                         }
@@ -163,5 +165,5 @@ main = do
         , borderWidth = myBorderWidth
         , normalBorderColor  = myNormalBorderColor
         , focusedBorderColor = myFocusedBorderColor
-        , mouseBindings      = myMouseBindings
+--        , mouseBindings      = myMouseBindings -- Commented out while trying mod4mask on left hand
         } `additionalKeys` myKeys
