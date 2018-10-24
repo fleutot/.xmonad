@@ -101,7 +101,7 @@ myKeys =
        , ((mod4Mask, xK_u), focusUrgent)        -- focus urgent window
        , ((mod4Mask .|. shiftMask, xK_h), sendMessage MirrorShrink)
        , ((mod4Mask .|. shiftMask, xK_l), sendMessage MirrorExpand)
-       , ((controlMask .|. mod4Mask, xK_equal), kill)
+       , ((controlMask .|. mod1Mask, xK_equal), kill)
        , ((mod4Mask, xK_z), sendMessage (JumpToLayout "\x25eb"))
        , ((mod4Mask, xK_x), sendMessage (JumpToLayout "Wide"))
        , ((mod4Mask, xK_f), sendMessage (JumpToLayout "\x25a1"))
@@ -115,7 +115,7 @@ myKeys =
        -- Launcher
        , ((mod4Mask, xK_p), spawn launcherString)
        -- Let the mouseModMask modifier re-tile a window, since my right hand is probably on my mouse.
-       --, ((mouseModMask, xK_t), withFocused $ windows . W.sink)
+       , ((mouseModMask, xK_t), withFocused $ windows . W.sink)
        ]
        ++
        --  for changing order of monitor output key
@@ -126,16 +126,16 @@ myKeys =
 -- Commented out while trying mod4mask on left hand. Search for myMouseBindings in this file.
 -- This makes the mouse bindings use Alt instead of Super. mod4mask is on my
 -- right hand, thus making it hard to use together with the mouse.
---mouseModMask    = mod1Mask
---myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
---    -- mod-button1, Set the window to floating mode and move by dragging
---    [ ((mouseModMask, button1), (\w -> focus w >> mouseMoveWindow w))
---    -- mod-button2, Raise the window to the top of the stack
---    , ((mouseModMask, button2), (\w -> focus w >> windows W.swapMaster))
---    -- mod-button3, Set the window to floating mode and resize by dragging
---    , ((mouseModMask, button3), (\w -> focus w >> mouseResizeWindow w))
---    -- you may also bind events to the mouse scroll wheel (button4 and button5)
---    ]
+mouseModMask    = mod1Mask
+myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
+    -- mod-button1, Set the window to floating mode and move by dragging
+    [ ((mouseModMask, button1), (\w -> focus w >> mouseMoveWindow w))
+    -- mod-button2, Raise the window to the top of the stack
+    , ((mouseModMask, button2), (\w -> focus w >> windows W.swapMaster))
+    -- mod-button3, Set the window to floating mode and resize by dragging
+    , ((mouseModMask, button3), (\w -> focus w >> mouseResizeWindow w))
+    -- you may also bind events to the mouse scroll wheel (button4 and button5)
+    ]
 
 main = do
   xmproc <- spawnPipe "/usr/bin/xmobar ~/.xmonad/.xmobarrc -x 0"
@@ -165,5 +165,5 @@ main = do
         , borderWidth = myBorderWidth
         , normalBorderColor  = myNormalBorderColor
         , focusedBorderColor = myFocusedBorderColor
---        , mouseBindings      = myMouseBindings -- Commented out while trying mod4mask on left hand
+        , mouseBindings      = myMouseBindings -- Commented out while trying mod4mask on left hand
         } `additionalKeys` myKeys

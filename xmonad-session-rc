@@ -121,10 +121,9 @@ fi
 # if type hipchat4 ; then
 #     hipchat4 &
 # fi
-
-if type franz ; then
-    franz &
-fi
+#if type franz ; then
+#    franz &
+#fi
 
 # Make ssh-agent prompt for key passphrase once and for all.
 # Problem: this does not seem to prompt for password, can it really be run from this file?
