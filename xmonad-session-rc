@@ -44,17 +44,17 @@ fi
 trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --widthtype request --transparent true --alpha 0 --tint 0x333333 --height 16 --monitor 0 &
 
 # Keyboard layout switcher
-if [[ -f $HOME/kinesis/kinesis_swe_us.conf ]]; then
-    # See https://github.com/fleutot/kinesis
-    #xkbcomp -i 3 $HOME/kinesis/kinesis_swe_us.conf $DISPLAY
-    # The commented row above did not work at startup. Maybe $DISPLAY cannot be used too early?
-    xkbcomp -i 3 $HOME/kinesis/kinesis_swe_us.conf :0
-else
-    # alt_shift_toggle stopped working (switching on press instead of release, breaking shortcuts with alt+shift).
-    # alt_caps might be better anyway, preventing rogue presses in eg emacs (M-< and M->).
-    #setxkbmap -layout us,us,se -variant ,dvp, -option 'grp:alt_caps_toggle' &
+#if [[ -f $HOME/kinesis/kinesis_swe_us.conf ]]; then
+#    # See https://github.com/fleutot/kinesis
+#    #xkbcomp -i 3 $HOME/kinesis/kinesis_swe_us.conf $DISPLAY
+#    # The commented row above did not work at startup. Maybe $DISPLAY cannot be used too early?
+#    xkbcomp -i 3 $HOME/kinesis/kinesis_swe_us.conf :0
+#else
+#    # alt_shift_toggle stopped working (switching on press instead of release, breaking shortcuts with alt+shift).
+#    # alt_caps might be better anyway, preventing rogue presses in eg emacs (M-< and M->).
+#    #setxkbmap -layout us,us,se -variant ,dvp, -option 'grp:alt_caps_toggle' &
     setxkbmap -layout us,se -option 'grp:alt_caps_toggle'
-fi
+#fi
 
 # Per window keyboard layout
 kbdd
