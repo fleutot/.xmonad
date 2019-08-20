@@ -86,42 +86,42 @@ color_bg   = "grey15"
 
 launcherString = "rofi -show combi -combi-modi \"drun,run\" -modi \"drun,run,ssh\" -config $HOME/.xmonad/rofi.conf"
 
---myKeys =
---       [
---       --((mod4Mask .|. controlMask, xK_l), spawn "xscreensaver-command -lock")
---         ((mod4Mask .|. controlMask, xK_l), spawn "lock --pixelate --no-text")
---       , ((mod4Mask .|. controlMask, xK_z), spawn "xscreensaver-command -lock ; sudo pm-suspend --quirk-dpms-on")
---       , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
---       , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
---       , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
---       , ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set", "Master", "3%+"] "" >>= dzenConfig return)
---       , ((mod4Mask .|. mod1Mask, xK_d), spawn "amixer set Master 3%-" >>= showVol)
---       , ((0, 0x1008ff02), spawn "sudo sysbacklight up") -- keysym found with xev
---       , ((0, 0x1008ff03), spawn "sudo sysbacklight down")  -- keysym found with xev
---       , ((mod4Mask, xK_u), focusUrgent)        -- focus urgent window
---       , ((mod4Mask .|. shiftMask, xK_h), sendMessage MirrorShrink)
---       , ((mod4Mask .|. shiftMask, xK_l), sendMessage MirrorExpand)
---       , ((controlMask .|. mod1Mask, xK_equal), kill)
---       , ((mod4Mask, xK_z), sendMessage (JumpToLayout "\x25eb"))
---       , ((mod4Mask, xK_x), sendMessage (JumpToLayout "Wide"))
---       , ((mod4Mask, xK_f), sendMessage (JumpToLayout "\x25a1"))
---       , ((mod4Mask, xK_c), sendMessage (JumpToLayout "\x260f"))
---       , ((mod4Mask, xK_v), sendMessage (JumpToLayout "Mastered Tabbed"))
---       , ((mod4Mask, xK_b), sendMessage (JumpToLayout "\x2505"))
---       , ((mod4Mask .|. shiftMask, xK_f), sendMessage ToggleStruts)
---       -- Rotate windows while keeping focus
---       , ((mod4Mask .|. controlMask, xK_j), rotAllUp)
---       , ((mod4Mask .|. controlMask, xK_k), rotAllDown)
---       -- Launcher
---       , ((mod4Mask, xK_p), spawn launcherString)
---       -- Let the mouseModMask modifier re-tile a window, since my right hand is probably on my mouse.
---       , ((mouseModMask, xK_t), withFocused $ windows . W.sink)
---       ]
---       ++
---       --  for changing order of monitor output key
---       [((m .|. mod4Mask, key), screenWorkspace sc >>= flip whenJust (windows . f)) -- Replace 'mod1Mask' with your mod key of choice.
---         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0,2,1] --  [0..] *** change to match your screen order *** This doesn't seem too stable, after restarts...
---         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+myKeys =
+       [
+       --((mod4Mask .|. controlMask, xK_l), spawn "xscreensaver-command -lock")
+         ((mod4Mask .|. controlMask, xK_l), spawn "lock --pixelate --no-text")
+       , ((mod4Mask .|. controlMask, xK_z), spawn "xscreensaver-command -lock ; sudo pm-suspend --quirk-dpms-on")
+       , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
+       , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
+       , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
+       , ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set", "Master", "3%+"] "" >>= dzenConfig return)
+       , ((mod4Mask .|. mod1Mask, xK_d), spawn "amixer set Master 3%-" >>= showVol)
+       , ((0, 0x1008ff02), spawn "sudo sysbacklight up") -- keysym found with xev
+       , ((0, 0x1008ff03), spawn "sudo sysbacklight down")  -- keysym found with xev
+       , ((mod4Mask, xK_u), focusUrgent)        -- focus urgent window
+       , ((mod4Mask .|. shiftMask, xK_h), sendMessage MirrorShrink)
+       , ((mod4Mask .|. shiftMask, xK_l), sendMessage MirrorExpand)
+       , ((controlMask .|. mod1Mask, xK_equal), kill)
+       , ((mod4Mask, xK_z), sendMessage (JumpToLayout "\x25eb"))
+       , ((mod4Mask, xK_x), sendMessage (JumpToLayout "Wide"))
+       , ((mod4Mask, xK_f), sendMessage (JumpToLayout "\x25a1"))
+       , ((mod4Mask, xK_c), sendMessage (JumpToLayout "\x260f"))
+       , ((mod4Mask, xK_v), sendMessage (JumpToLayout "Mastered Tabbed"))
+       , ((mod4Mask, xK_b), sendMessage (JumpToLayout "\x2505"))
+       , ((mod4Mask .|. shiftMask, xK_f), sendMessage ToggleStruts)
+       -- Rotate windows while keeping focus
+       , ((mod4Mask .|. controlMask, xK_j), rotAllUp)
+       , ((mod4Mask .|. controlMask, xK_k), rotAllDown)
+       -- Launcher
+       , ((mod4Mask, xK_p), spawn launcherString)
+       -- Let the mouseModMask modifier re-tile a window, since my right hand is probably on my mouse.
+       , ((mouseModMask, xK_t), withFocused $ windows . W.sink)
+       ]
+       ++
+       --  for changing order of monitor output key
+       [((m .|. mod4Mask, key), screenWorkspace sc >>= flip whenJust (windows . f)) -- Replace 'mod1Mask' with your mod key of choice.
+         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0,2,1] --  [0..] *** change to match your screen order *** This doesn't seem too stable, after restarts...
+         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 -- Commented out while trying mod4mask on left hand. Search for myMouseBindings in this file.
 -- This makes the mouse bindings use Alt instead of Super. mod4mask is on my

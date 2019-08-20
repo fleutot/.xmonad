@@ -7,7 +7,10 @@
 -- Normally, you'd only override those defaults you care about.
 --
 
-import XMonad
+-- Hiding ||| is necessary in order to use JumpToLayout
+import XMonad hiding ((|||))
+import XMonad.Layout hiding ((|||))
+
 import XMonad.Actions.PhysicalScreens
 import XMonad.Layout.ThreeColumns
 import Data.Default
@@ -16,6 +19,9 @@ import System.Exit
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+
+
+import XMonad.Layout.LayoutCombinators
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -138,6 +144,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Exit with only left hand on Kinesis keyboard
      , ((controlMask .|. mod1Mask, xK_equal), kill)
 
+     , ((modm, xK_c), sendMessage (JumpToLayout "ThreeCol"))
+     , ((modm, xK_z), sendMessage (JumpToLayout "Tall"))
+     , ((modm, xK_f), sendMessage (JumpToLayout "Full"))
+
      --, ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set",
      --"Master", "3%+"] "" >>= dzenConfig return)
      --, ((mod4Mask .|. mod1Mask, xK_u), spawn "amixer set Master 3%+")
@@ -194,7 +204,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = tiled ||| Mirror tiled ||| ThreeCol 1 (3/100) (1/2) ||| Full
+myLayout = tiled ||| Mirror tiled ||| ThreeCol nmaster delta (1/3) ||| Full
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
