@@ -9,6 +9,7 @@
 
 import XMonad
 import XMonad.Actions.PhysicalScreens
+import XMonad.Layout.ThreeColumns
 import Data.Default
 import Data.Monoid
 import System.Exit
@@ -193,7 +194,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = tiled ||| Mirror tiled ||| Full
+myLayout = tiled ||| Mirror tiled ||| ThreeCol 1 (3/100) (1/2) ||| Full
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
