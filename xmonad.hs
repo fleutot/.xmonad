@@ -9,8 +9,6 @@
 
 import XMonad
 import XMonad.Actions.PhysicalScreens
-import XMonad.Util.Dzen
-import XMonad.Util.Run(spawnPipe, runProcessWithInput)
 import Data.Default
 import Data.Monoid
 import System.Exit
@@ -57,8 +55,6 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 --
 myNormalBorderColor  = "#37322a"
 myFocusedBorderColor = "#dd4814"
-
-showVol = dzenConfig return . show
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -143,8 +139,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
      --, ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set",
      --"Master", "3%+"] "" >>= dzenConfig return)
-     , ((mod4Mask .|. mod1Mask, xK_u), spawn "amixer set Master 3%+")
-     , ((mod4Mask .|. mod1Mask, xK_d), spawn "amixer set Master 3%-")
+     --, ((mod4Mask .|. mod1Mask, xK_u), spawn "amixer set Master 3%+")
+     --, ((mod4Mask .|. mod1Mask, xK_d), spawn "amixer set Master 3%-")
 
     ]
     ++
