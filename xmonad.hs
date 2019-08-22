@@ -63,6 +63,8 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 myNormalBorderColor  = "#37322a"
 myFocusedBorderColor = "#dd4814"
 
+launcherString = "rofi -show combi -combi-modi \"drun,run\" -modi \"drun,run,ssh\" -config $HOME/.xmonad/rofi.conf"
+
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
@@ -70,12 +72,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
-
-    -- launch dmenu
-    , ((modm,               xK_p     ), spawn "dmenu_run")
-
-    -- launch gmrun
-    , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -152,6 +148,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
      , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
      , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
      , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
+
+
+     -- Launcher
+     , ((mod4Mask, xK_p), spawn launcherString)
 
      --, ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set",
      --"Master", "3%+"] "" >>= dzenConfig return)
