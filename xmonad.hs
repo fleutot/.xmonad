@@ -148,6 +148,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
      , ((modm, xK_z), sendMessage (JumpToLayout "Tall"))
      , ((modm, xK_f), sendMessage (JumpToLayout "Full"))
 
+     -- Print screen
+     , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
+     , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
+     , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
+
      --, ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set",
      --"Master", "3%+"] "" >>= dzenConfig return)
      --, ((mod4Mask .|. mod1Mask, xK_u), spawn "amixer set Master 3%+")
