@@ -12,6 +12,7 @@ import XMonad hiding ((|||))
 import XMonad.Layout hiding ((|||))
 
 import XMonad.Actions.PhysicalScreens
+import XMonad.Actions.UpdatePointer
 import XMonad.Layout.ThreeColumns
 import Data.Default
 import Data.Monoid
@@ -262,6 +263,7 @@ myEventHook = mempty
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
 myLogHook = return ()
+  >> updatePointer(0.75, 0.75) (0, 0) -- Move mouse pointer with focus
 
 ------------------------------------------------------------------------
 -- Startup hook
