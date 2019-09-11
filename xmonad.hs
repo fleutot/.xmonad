@@ -154,6 +154,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
      -- Launcher
      , ((mod4Mask, xK_p), spawn launcherString)
 
+     -- Mouse uses Alt as modifier, since mod4Mask is on my mouse hand
+     -- (right). Use the same modifier for re-tiling.
+     , ((myMouseModMask, xK_t), withFocused $ windows . W.sink)
+
      --, ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set",
      --"Master", "3%+"] "" >>= dzenConfig return)
      --, ((mod4Mask .|. mod1Mask, xK_u), spawn "amixer set Master 3%+")
@@ -179,21 +183,27 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         | (key, sc) <- zip [xK_w, xK_e, xK_r] [0,2,1]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
+-- This makes the mouse bindings use Alt instead of Super. mod4mask is on my
+-- right hand, thus making it hard to use together with the mouse.
+myMouseModMask    = mod1Mask
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
 --
+-- I'm not sure how to use modm, is it a variable created for this assignment
+-- only? How does it relate do XConfig, and sets is in the row below?
+-- Workaround now by using the myMouseModMask directly below.
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- mod-button1, Set the window to floating mode and move by dragging
-    [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
+    [ ((myMouseModMask, button1), (\w -> focus w >> mouseMoveWindow w
                                        >> windows W.shiftMaster))
 
     -- mod-button2, Raise the window to the top of the stack
-    , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
+    , ((myMouseModMask, button2), (\w -> focus w >> windows W.shiftMaster))
 
     -- mod-button3, Set the window to floating mode and resize by dragging
-    , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
+    , ((myMouseModMask, button3), (\w -> focus w >> mouseResizeWindow w
                                        >> windows W.shiftMaster))
 
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
