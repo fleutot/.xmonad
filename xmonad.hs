@@ -13,6 +13,8 @@ import XMonad.Layout hiding ((|||))
 
 import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.UpdatePointer
+import XMonad.Hooks.ManageDocks
+import XMonad.Layout.NoBorders
 import XMonad.Layout.ThreeColumns
 import Data.Default
 import Data.Monoid
@@ -220,7 +222,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = tiled ||| Mirror tiled ||| ThreeCol nmaster delta (1/3) ||| Full
+myLayout = smartBorders $ tiled ||| Mirror tiled ||| ThreeCol nmaster delta (1/3) ||| Full
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = Tall nmaster delta ratio
@@ -253,7 +255,9 @@ myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore ]
+    , resource  =? "kdesktop"       --> doIgnore
+    , manageDocks
+    ]
 
 ------------------------------------------------------------------------
 -- Event handling
