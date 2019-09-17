@@ -139,7 +139,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
 
-    -- My custom keys
+    -- My custom keys -----------------------------
     -- Exit with only left hand on Kinesis keyboard
      , ((controlMask .|. mod1Mask, xK_equal), kill)
 
@@ -160,10 +160,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
      -- (right). Use the same modifier for re-tiling.
      , ((myMouseModMask, xK_t), withFocused $ windows . W.sink)
 
-     --, ((mod4Mask .|. mod1Mask, xK_u), runProcessWithInput "amixer" ["set",
-     --"Master", "3%+"] "" >>= dzenConfig return)
-     --, ((mod4Mask .|. mod1Mask, xK_u), spawn "amixer set Master 3%+")
-     --, ((mod4Mask .|. mod1Mask, xK_d), spawn "amixer set Master 3%-")
+     -- Sound volume
+     , ((mod4Mask .|. mod1Mask, xK_u), spawn "pactl set-sink-volume $(pactl list short sinks | grep RUNNING | awk '{print $1}') +3%")
+     , ((mod4Mask .|. mod1Mask, xK_d), spawn "pactl set-sink-volume $(pactl list short sinks | grep RUNNING | awk '{print $1}') -3%")
+     -- Add a play/pause!
 
     ]
     ++
