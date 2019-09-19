@@ -8,14 +8,16 @@
 ALL_MONITORS_STR=$(xrandr --current | grep " connected " | awk 'BEGIN { ORS = " "}; {print $1}' )
 read -r -a ALL_MONITORS <<< "$ALL_MONITORS_STR"
 NB_CONNECT_OUTPUT="${#ALL_MONITORS[@]}"
-MONITOR_LAPTOP=${ALL_MONITORS[0]}
-MONITOR_LEFT=${ALL_MONITORS[1]}
-MONITOR_RIGHT=${ALL_MONITORS[2]}
+
+# Path is not set yet, and sourcing ~/.bashrc does not seem to work.
+PATH=~/bin:$PATH
+
 if [ $NB_CONNECT_OUTPUT == 3 ] ; then
-    xrandr \
-        --output $MONITOR_LEFT --pos 0x0 --auto --primary \
-        --output $MONITOR_RIGHT --right-of $MONITOR_LEFT --auto \
-        --output $MONITOR_LAPTOP --auto --pos 960x1200
+    echo "Docking on login" >> /tmp/xmonad.log
+    dock
+else
+    echo "Undocking on login" >> /tmp/xmonad.log
+    undock
 fi
 
 GTK_THEME=Equilux-compact
@@ -27,17 +29,6 @@ export GTK2_RC_FILES
 # Compositor
 if [[ -x "/usr/bin/compton" ]]; then
     compton --config "$HOME/.xmonad/compton.conf" &
-fi
-
-# Wallpaper
-# To randomly switch wallpaper every hour, add a crontab:
-# env | grep -i display # get the name of the current display, e.g. DISPLAY=:0.0
-# crontab -e
-# 0 *    *   *   *     DISPLAY=:0.0 feh --bg-fill $(find /opt/gauthier/Pictures/wallpapers -type f |sort -R |head -1)
-if type wallpaper_random_set.sh ; then
-    $HOME/bin/wallpaper_random_set.sh
-elif [[ -f "$HOME/wallpaper.jpg" ]] && hash feh ; then
-    feh --bg-fill "$HOME/wallpaper.jpg"
 fi
 
 # Tray for skype and other icons
@@ -61,7 +52,10 @@ kbdd
 
 # Java applications don't detect xmonad as a non-reparenting WM, resulting in grey empty windows.
 # (under investigation, this might have to move to ~/.bashrc)
-#Trying to do that in xmonad.hs, check after restart and remove this if setting from xmonad.hs worked.
+#Trying to do that in xmonad.hs, check after restart and remove this if setting
+# from xmonad.hs worked.
+# Now not done in xmonad.hs since upgrade, yet Cooja is happy. Java detects
+# non-reparenting automatically, maybe? Or xmonad sets it by itself?
 #export _JAVA_AWT_WM_NONREPARENTING=1
 
 # Startup apps
@@ -91,10 +85,6 @@ elif type xfce4-power-manager ; then
     sudo xfce4-power-manager &
 fi
 
-# if [[ -x "/opt/thefanclub/grive-tools/grive-indicator" ]] ; then
-#     /opt/thefanclub/grive-tools/grive-indicator &
-# fi
-
 if type unclutter ; then
     # unclutter starts a default version by itself, see (and modify)
     # /etc/default/unclutter
@@ -116,14 +106,6 @@ fi
 if type nm-applet ; then
     nm-applet &
 fi
-
-# Hipchat client not working, some troubles with QT. Use Franz instead
-# if type hipchat4 ; then
-#     hipchat4 &
-# fi
-#if type franz ; then
-#    franz &
-#fi
 
 # Make ssh-agent prompt for key passphrase once and for all.
 # Problem: this does not seem to prompt for password, can it really be run from this file?
