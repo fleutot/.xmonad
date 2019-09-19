@@ -66,7 +66,9 @@ myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
 myNormalBorderColor  = "#37322a"
 myFocusedBorderColor = "#dd4814"
 
-launcherString = "rofi -show combi -combi-modi \"drun,run\" -modi \"drun,run,ssh\" -config $HOME/.xmonad/rofi.conf"
+-- Add locations where rofi should look for executable files. Somehow, sourcing
+-- ~/.bashrc in xmonad-session-rc does not work.
+launcherString = "PATH=~/bin:$PATH rofi -show combi -combi-modi \"drun,run\" -modi \"drun,run,ssh\" -config $HOME/.xmonad/rofi.conf"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
