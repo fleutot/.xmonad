@@ -32,7 +32,8 @@ if [[ -x "/usr/bin/compton" ]]; then
 fi
 
 # Tray for skype and other icons
-trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --widthtype request --transparent true --alpha 0 --tint 0x333333 --height 16 --monitor 0 &
+# Nowadays dealing with trayer on user request only, see xmonad.hs. Even using xfce4-panel.
+#trayer --edge top --align right --SetDockType true --SetPartialStrut true  --expand true --widthtype request --transparent true --alpha 0 --tint 0x333333 --height 16 --monitor 0 &
 
 # Keyboard layout switcher
 #if [[ -f $HOME/kinesis/kinesis_swe_us.conf ]]; then
@@ -82,7 +83,7 @@ if type gnome-power-manager ; then
 elif type xfce4-power-manager ; then
     sleep 2
     # This might require superuser in order to allow hibernate.
-    sudo xfce4-power-manager &
+    xfce4-power-manager &
 fi
 
 if type unclutter ; then

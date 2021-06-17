@@ -11,12 +11,14 @@
 import XMonad hiding ((|||))
 import XMonad.Layout hiding ((|||))
 
+import XMonad.Actions.RotSlaves
 import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.UpdatePointer
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ThreeColumns
 import Data.Default
+import Data.List (isPrefixOf)
 import Data.Monoid
 import System.Exit
 
@@ -111,6 +113,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Swap the focused window with the previous window
     , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
 
+    -- Rotate windows, get next to current location
+    , ((modm .|. controlMask, xK_j     ), rotAllDown )
+
+    -- Rotate windows, get previous to current location
+    , ((modm .|. controlMask, xK_k     ), rotAllUp )
+
     -- Shrink the master area
     , ((modm,               xK_h     ), sendMessage Shrink)
 
@@ -142,18 +150,18 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
 
     -- My custom keys -----------------------------
-    -- Exit with only left hand on Kinesis keyboard
+    -- Kill window with only left hand on Kinesis keyboard
      , ((controlMask .|. mod1Mask, xK_equal), kill)
 
+    -- Layouts
      , ((modm, xK_c), sendMessage (JumpToLayout "ThreeCol"))
      , ((modm, xK_z), sendMessage (JumpToLayout "Tall"))
      , ((modm, xK_f), sendMessage (JumpToLayout "Full"))
 
      -- Print screen
-     , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
+     , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H%M%S.png")
      , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
      , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
-
 
      -- Launcher
      , ((mod4Mask, xK_p), spawn launcherString)
@@ -166,6 +174,17 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
      , ((mod4Mask .|. mod1Mask, xK_u), spawn "pactl set-sink-volume $(pactl list short sinks | grep RUNNING | awk '{print $1}') +3%")
      , ((mod4Mask .|. mod1Mask, xK_d), spawn "pactl set-sink-volume $(pactl list short sinks | grep RUNNING | awk '{print $1}') -3%")
      -- Add a play/pause!
+
+     -- Show/kill tray
+     --, ((mod4Mask, xK_a), spawn "pgrep trayer && killall trayer || trayer
+     ----widthtype request --height 60 --monitor 0 --edge bottom --align right
+     ----distance 70 --margin 80")
+     --, ((mod4Mask, xK_a), spawn "pkill trayer || trayer --widthtype request --height 16 --monitor 0 --edge bottom --align right --distance 10 --margin 10 --transparent true --alpha 255 --monitor 0")
+     , ((mod4Mask, xK_a), spawn "pkill xfce4-panel || xfce4-panel --disable-wm-check ")
+
+     -- Lock
+     , ((mod4Mask .|. controlMask, xK_l), spawn "lock --pixelate --no-text")
+
 
     ]
     ++
@@ -255,7 +274,9 @@ myLayout = smartBorders $ tiled ||| Mirror tiled ||| ThreeCol nmaster delta (1/3
 --
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
+    , fmap ("Gimp" `isPrefixOf`) className --> doFloat
+    , className =? "Xfce4-panel"    --> doIgnore
+    , className =? "panel"    --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore
     , manageDocks
