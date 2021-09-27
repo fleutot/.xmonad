@@ -9,22 +9,29 @@ ALL_MONITORS_STR=$(xrandr --current | grep " connected " | awk 'BEGIN { ORS = " 
 read -r -a ALL_MONITORS <<< "$ALL_MONITORS_STR"
 NB_CONNECT_OUTPUT="${#ALL_MONITORS[@]}"
 
+## why does the following not output to /tmp/xmonad.log??
+xrandr --current >> /tmp/xmonad.log
+echo AAAAA >> /tmp/xmonad.log
+xrandr --current | grep " connected " | awk 'BEGIN { ORS = " "}; {print $1}' >> /tmp/xmonad.log
+
 # Path is not set yet, and sourcing ~/.bashrc does not seem to work.
 PATH=~/bin:$PATH
 
-if [ $NB_CONNECT_OUTPUT == 3 ] ; then
-    echo "Docking on login" >> /tmp/xmonad.log
-    dock
-else
-    echo "Undocking on login" >> /tmp/xmonad.log
-    undock
+echo Debug variable: $NB_CONNECT_OUTPUT >> /tmp/xmonad.log
+
+if [ $NB_CONNECT_OUTPUT == 1 ] ; then
+    echo We could do the comparison >> /tmp/xomad.log
 fi
 
-GTK_THEME=Equilux-compact
-export GTK_THEME
 
-GTK2_RC_FILES=/usr/share/themes/Equilux-compact/gtk-2.0/gtkrc
-export GTK2_RC_FILES
+#if [ $NB_CONNECT_OUTPUT == 3 ] ; then
+#    echo "Docking on login" >> /tmp/xmonad.log
+#    dock
+#else
+#    echo "Undocking on login" >> /tmp/xmonad.log
+#    # Undocking here does not work on my thinkpad??
+#    undock
+#fi
 
 # Compositor
 if [[ -x "/usr/bin/compton" ]]; then
@@ -104,8 +111,16 @@ if type unclutter ; then
     fi
 fi
 
+if type blueman-applet ; then
+    blueman-applet &
+fi
+
 if type nm-applet ; then
     nm-applet &
+fi
+
+if type slack ; then
+    slack &
 fi
 
 # Make ssh-agent prompt for key passphrase once and for all.

@@ -31,7 +31,7 @@ import XMonad.Layout.LayoutCombinators
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "gnome-terminal"
+myTerminal      = "gnome-terminal --zoom 0.85"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -70,7 +70,7 @@ myFocusedBorderColor = "#dd4814"
 
 -- Add locations where rofi should look for executable files. Somehow, sourcing
 -- ~/.bashrc in xmonad-session-rc does not work.
-launcherString = "PATH=~/bin:$PATH rofi -show combi -combi-modi \"drun,run\" -modi \"drun,run,ssh\" -config $HOME/.xmonad/rofi.conf"
+launcherString = "PATH=~/bin:/opt:$PATH rofi -show combi -combi-modi \"drun,run\" -modi \"drun,run,ssh\" -config $HOME/.xmonad/rofi.conf"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -160,8 +160,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
      -- Print screen
      , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H%M%S.png")
-     , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
-     , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshot_%Y-%m-%d_%H%M%S.png")
+     , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H%M%S.png")
+     , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H%M%S.png")
 
      -- Launcher
      , ((mod4Mask, xK_p), spawn launcherString)
