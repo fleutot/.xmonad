@@ -20,23 +20,30 @@ PATH=~/bin:$PATH
 echo Debug variable: $NB_CONNECT_OUTPUT >> /tmp/xmonad.log
 
 if [ $NB_CONNECT_OUTPUT == 1 ] ; then
-    echo We could do the comparison >> /tmp/xomad.log
+    echo "One X output" >> /tmp/xmonad.log
 fi
 
 
-#if [ $NB_CONNECT_OUTPUT == 3 ] ; then
-#    echo "Docking on login" >> /tmp/xmonad.log
-#    dock
-#else
-#    echo "Undocking on login" >> /tmp/xmonad.log
-#    # Undocking here does not work on my thinkpad??
-#    undock
-#fi
+if [ $NB_CONNECT_OUTPUT == 3 ] ; then
+    echo "Docking on login" >> /tmp/xmonad.log
+    dock
+else
+    echo "Undocking on login" >> /tmp/xmonad.log
+    # Undocking here does not work on my thinkpad??
+    undock
+fi
 
 # Compositor
 if [[ -x "/usr/bin/compton" ]]; then
     compton --config "$HOME/.xmonad/compton.conf" &
 fi
+
+# Theming
+if [[ -d /usr/share/themes/Nordic-darker-standard-buttons ]] ; then
+    export GTK_THEME=Nordic-darker-standard-buttons
+fi
+export QT_QPA_PLATFORMTHEME=qt5ct
+#export QT_STYLE_OVERRIDE=kvantum
 
 # Tray for skype and other icons
 # Nowadays dealing with trayer on user request only, see xmonad.hs. Even using xfce4-panel.
@@ -80,10 +87,6 @@ if type emacs ; then
     emacs &
 fi
 
-if type gnome-terminal ; then
-    gnome-terminal &
-fi
-
 if type gnome-power-manager ; then
     sleep 3
     gnome-power-manager &
@@ -103,7 +106,7 @@ if type unclutter ; then
     # "avoid erroneous focus changes", let's test and see.
     # First try to run unclutter from apt. If it doesn't work (-noevents not
     # supported), try the other one.
-    unclutter -noevents &
+    unclutter -noevents -idle .5 &
 
     if ! pgrep unclutter ; then
         # --ignore-scrolling doesn't seem to work.
@@ -119,10 +122,7 @@ if type nm-applet ; then
     nm-applet &
 fi
 
-if type slack ; then
-    slack &
-fi
-
 # Make ssh-agent prompt for key passphrase once and for all.
 # Problem: this does not seem to prompt for password, can it really be run from this file?
+eval $(ssh-agent)
 ssh-add
