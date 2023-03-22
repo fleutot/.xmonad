@@ -75,6 +75,11 @@ kbdd
 
 # Startup apps
 
+# Notifier
+if type dunst ; then
+    dunst &
+fi
+
 if type xscreensaver ; then
     xscreensaver -nosplash &
 fi

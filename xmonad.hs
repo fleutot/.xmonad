@@ -159,7 +159,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
      , ((modm, xK_f), sendMessage (JumpToLayout "Full"))
 
      -- Print screen
-     , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -s ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H%M%S.png")
+     , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -f -s ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H%M%S.png")
      , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H%M%S.png")
      , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H%M%S.png")
 
