@@ -11,6 +11,7 @@
 import XMonad hiding ((|||))
 import XMonad.Layout hiding ((|||))
 
+-- Troubles loading the libs? Try this: sudo apt install libghc-xmonad-contrib-dev
 import XMonad.Actions.RotSlaves
 import XMonad.Actions.PhysicalScreens
 import XMonad.Actions.UpdatePointer
@@ -70,7 +71,7 @@ myFocusedBorderColor = "#dd4814"
 
 -- Add locations where rofi should look for executable files. Somehow, sourcing
 -- ~/.bashrc in xmonad-session-rc does not work.
-launcherString = "PATH=~/bin:/opt:$PATH rofi -show combi -combi-modi \"drun,run\" -modi \"drun,run,ssh\" -config $HOME/.xmonad/rofi.conf"
+launcherString = "PATH=~/bin:/opt:$PATH rofi -show combi -combi-modi \"drun,run\" -modi \"drun,run,ssh\" -theme gruvbox-dark-soft.rasi"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
