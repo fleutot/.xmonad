@@ -18,7 +18,7 @@ import XMonad.Actions.UpdatePointer
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ThreeColumns
-import Data.Default
+--- import Data.Default
 import Data.List (isPrefixOf)
 import Data.Monoid
 import System.Exit
@@ -184,7 +184,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
      , ((mod4Mask, xK_a), spawn "pkill xfce4-panel || xfce4-panel --disable-wm-check ")
 
      -- Lock
-     , ((mod4Mask .|. controlMask, xK_l), spawn "lock --pixelate --no-text")
+     , ((mod4Mask .|. controlMask, xK_l), spawn "mylock")
 
 
     ]
@@ -275,6 +275,7 @@ myLayout = smartBorders $ tiled ||| Mirror tiled ||| ThreeCol nmaster delta (1/3
 --
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
+    , className =? "xsecurelock"    --> doFloat
     , fmap ("Gimp" `isPrefixOf`) className --> doFloat
     , className =? "Xfce4-panel"    --> doIgnore
     , className =? "panel"    --> doFloat

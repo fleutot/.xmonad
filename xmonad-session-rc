@@ -2,6 +2,11 @@
 # By default, xmonad looks for this in ~/.xmonad/xmonad-session-rc.
 # If this file does not exist, create it, or a link to this content.
 
+export XMONAD_LOG_FILE="/tmp/xmonad.log"
+rm $XMONAD_LOG_FILE
+
+echo "xmonad-session-rc" >> "$XMONAD_LOG_FILE"
+
 # Deal with default multi-monitor config
 # Set awk Output Record Separator to one space, since records are separated by \n by
 # default (unlike fields).
@@ -10,32 +15,32 @@ read -r -a ALL_MONITORS <<< "$ALL_MONITORS_STR"
 NB_CONNECT_OUTPUT="${#ALL_MONITORS[@]}"
 
 ## why does the following not output to /tmp/xmonad.log??
-xrandr --current >> /tmp/xmonad.log
-echo AAAAA >> /tmp/xmonad.log
-xrandr --current | grep " connected " | awk 'BEGIN { ORS = " "}; {print $1}' >> /tmp/xmonad.log
+xrandr --current >> "$XMONAD_LOG_FILE"
+xrandr --current | grep " connected " | awk 'BEGIN { ORS = " "}; {print $1}' >> "$XMONAD_LOG_FILE"
 
 # Path is not set yet, and sourcing ~/.bashrc does not seem to work.
 PATH=~/bin:$PATH
 
-echo Debug variable: $NB_CONNECT_OUTPUT >> /tmp/xmonad.log
+echo "Debug variable: $NB_CONNECT_OUTPUT" >> "$XMONAD_LOG_FILE"
 
-if [ $NB_CONNECT_OUTPUT == 1 ] ; then
-    echo "One X output" >> /tmp/xmonad.log
+if [ "$NB_CONNECT_OUTPUT" == 1 ] ; then
+    echo "One X output" >> "$XMONAD_LOG_FILE"
 fi
 
 
-if [ $NB_CONNECT_OUTPUT == 3 ] ; then
-    echo "Docking on login" >> /tmp/xmonad.log
+if [ "$NB_CONNECT_OUTPUT" == 3 ] ; then
+    echo "Docking on login" >> "$XMONAD_LOG_FILE"
     dock
 else
-    echo "Undocking on login" >> /tmp/xmonad.log
+    echo "Undocking on login" >> "$XMONAD_LOG_FILE"
     # Undocking here does not work on my thinkpad??
     undock
 fi
 
 # Compositor
 if [[ -x "/usr/bin/compton" ]]; then
-    compton --config "$HOME/.xmonad/compton.conf" &
+    # Explicit glx required for xsecurelock to succeed with background
+    compton --config "$HOME/.xmonad/compton.conf" --backend glx --paint-on-overlay &
 fi
 
 # Theming
@@ -43,7 +48,7 @@ if [[ -d /usr/share/themes/Nordic-darker-standard-buttons ]] ; then
     export GTK_THEME=Nordic-darker-standard-buttons
 fi
 export QT_QPA_PLATFORMTHEME=qt5ct
-#export QT_STYLE_OVERRIDE=kvantum
+ort QT_STYLE_OVERRIDE=kvantum
 
 # Tray for skype and other icons
 # Nowadays dealing with trayer on user request only, see xmonad.hs. Even using xfce4-panel.
@@ -129,5 +134,7 @@ fi
 
 # Make ssh-agent prompt for key passphrase once and for all.
 # Problem: this does not seem to prompt for password, can it really be run from this file?
-eval $(ssh-agent)
+eval "$(ssh-agent)"
 ssh-add
+
+echo "end of xmonad-session-rc" >> "$XMONAD_LOG_FILE"
