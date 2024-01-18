@@ -31,8 +31,8 @@ import XMonad.Layout.LayoutCombinators
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
---
-myTerminal      = "gnome-terminal --zoom 0.85"
+-- full-screen to remove window decoraions. Xmonad puts it in a window anyway.
+myTerminal      = "gnome-terminal --zoom 0.85 --full-screen"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -84,7 +84,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
 
-     -- Rotate through the available layout algorithms
+    -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
 
     --  Reset the layouts on the current workspace to default
