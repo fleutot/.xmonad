@@ -43,6 +43,10 @@ if [[ -x "/usr/bin/compton" ]]; then
     compton --config "$HOME/.xmonad/compton.conf" --backend glx --paint-on-overlay &
 fi
 
+if [[ -x "$HOME/bin/mylock" ]]; then
+    export LOCK_CMD="$HOME/bin/mylock"
+fi
+
 # Theming
 if [[ -d /usr/share/themes/Nordic-darker-standard-buttons ]] ; then
     export GTK_THEME=Nordic-darker-standard-buttons
@@ -106,7 +110,11 @@ elif type xfce4-power-manager ; then
     xfce4-power-manager &
 fi
 
-if type unclutter ; then
+
+if type unclutter-xfixes ; then
+    # jitter required for ignore-scrolling to work: https://github.com/Airblader/unclutter-xfixes/issues/47
+    unclutter-xfixes --timeout 2 --ignore-scrolling --jitter 1&
+elif type unclutter ; then
     # unclutter starts a default version by itself, see (and modify)
     # /etc/default/unclutter
     # -noevents is needed in order not to give focus to the window under the
@@ -119,7 +127,8 @@ if type unclutter ; then
     unclutter -noevents -idle .5 &
 
     if ! pgrep unclutter ; then
-        # --ignore-scrolling doesn't seem to work.
+	# --ignore-scrolling doesn't seem to work. Might require
+	# jitter?: https://github.com/Airblader/unclutter-xfixes/issues/47
         unclutter --timeout 1 --ignore-scrolling&
     fi
 fi
