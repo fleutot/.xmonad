@@ -152,7 +152,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- My custom keys -----------------------------
     -- Kill window with only left hand on Kinesis keyboard
-     , ((controlMask .|. mod1Mask, xK_equal), kill)
+    , ((controlMask .|. mod1Mask, xK_equal), kill)
+    , ((controlMask .|. mod1Mask, xK_c), kill)
 
     -- Layouts
      , ((modm, xK_c), sendMessage (JumpToLayout "ThreeCol"))
@@ -162,7 +163,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
      -- Print screen
      , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -f -s ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H%M%S.png")
      , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H%M%S.png")
-     , ((0, xK_Print), spawn "scrot ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H%M%S.png")
+     , ((0, xK_Print), spawn "scrot -s - | xclip -selection clipboard -t image/png")
 
      -- Launcher
      , ((mod4Mask, xK_p), spawn launcherString)
