@@ -163,7 +163,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
      -- Print screen
      , ((controlMask .|. shiftMask, xK_Print), spawn "sleep 0.8; scrot -f -s ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H%M%S.png")
      , ((controlMask, xK_Print), spawn "scrot -u ~/Pictures/Screenshots/Screenshot_%Y-%m-%d_%H%M%S.png")
-     , ((0, xK_Print), spawn "scrot -s - | xclip -selection clipboard -t image/png")
+     , ((0, xK_Print), spawn "scrot -s --line mode=edge - | xclip -selection clipboard -t image/png")
 
      -- Launcher
      , ((mod4Mask, xK_p), spawn launcherString)
