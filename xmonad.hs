@@ -21,6 +21,7 @@ import XMonad.Layout.ThreeColumns
 --- import Data.Default
 import Data.List (isPrefixOf)
 import Data.Monoid
+import Graphics.X11.ExtraTypes.XF86
 import System.Exit
 
 import qualified XMonad.StackSet as W
@@ -175,6 +176,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
      -- Sound volume
      , ((mod4Mask .|. mod1Mask, xK_u), spawn "pactl set-sink-volume $(pactl list short sinks | grep RUNNING | awk '{print $1}') +3%")
      , ((mod4Mask .|. mod1Mask, xK_d), spawn "pactl set-sink-volume $(pactl list short sinks | grep RUNNING | awk '{print $1}') -3%")
+     -- media keys: volume
+     --, ((0, 0x1008ff13), spawn "pactl set-sink-volume $(pactl list short sinks | awk '{print $1}') +3%")
+     --, ((0, 0x1008ff11), spawn "pactl set-sink-volume $(pactl list short sinks | awk '{print $1}') -3%")
+     --, ((0, 0x1008ff12), spawn "pactl set-sink-mute $(pactl list
+     --short sinks | awk '{print $1}') toggle"
+     , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume $(pactl list short sinks | grep RUNNING | awk '{print $1}') +3%")
+     , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume $(pactl list short sinks | grep RUNNING | awk '{print $1}') -3%")
+     , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute $(pactl list short sinks | grep RUNNING | awk '{print $1}') toggle")
      -- Add a play/pause!
 
      -- Show/kill tray
