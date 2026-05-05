@@ -22,13 +22,33 @@ import XMonad.Layout.ThreeColumns
 import Data.List (isPrefixOf)
 import Data.Monoid
 import Graphics.X11.ExtraTypes.XF86
+import System.Directory (findExecutable)
 import System.Exit
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
-
 import XMonad.Layout.LayoutCombinators
+
+data AudioInterface = AudioInterface
+    { volUp   :: Int -> String
+    , volDown :: Int -> String
+    , volMute :: String
+    }
+
+pactlInterface :: AudioInterface
+pactlInterface = AudioInterface
+    { volUp   = \n -> "pactl set-sink-volume @DEFAULT_SINK@ +" ++ show n ++ "%"
+    , volDown = \n -> "pactl set-sink-volume @DEFAULT_SINK@ -" ++ show n ++ "%"
+    , volMute = "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+    }
+
+wpctlInterface :: AudioInterface
+wpctlInterface = AudioInterface
+    { volUp   = \n -> "wpctl set-volume @DEFAULT_AUDIO_SINK@ " ++ show n ++ "%+"
+    , volDown = \n -> "wpctl set-volume @DEFAULT_AUDIO_SINK@ " ++ show n ++ "%-"
+    , volMute = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    }
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -77,7 +97,7 @@ launcherString = "PATH=~/bin:/opt:$PATH rofi -show combi -combi-modi \"drun,run\
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
-myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+myKeys audioTool conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
@@ -181,9 +201,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
      --, ((0, 0x1008ff11), spawn "pactl set-sink-volume $(pactl list short sinks | awk '{print $1}') -3%")
      --, ((0, 0x1008ff12), spawn "pactl set-sink-mute $(pactl list
      --short sinks | awk '{print $1}') toggle"
-     , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume $(pactl list short sinks | grep RUNNING | awk '{print $1}') +3%")
-     , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume $(pactl list short sinks | grep RUNNING | awk '{print $1}') -3%")
-     , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute $(pactl list short sinks | grep RUNNING | awk '{print $1}') toggle")
+     , ((0, xF86XK_AudioRaiseVolume), spawn $ volUp audioTool 3)
+     , ((0, xF86XK_AudioLowerVolume), spawn $ volDown audioTool 3)
+     , ((0, xF86XK_AudioMute), spawn $ volMute audioTool)
      -- Add a play/pause!
 
      -- Show/kill tray
@@ -329,7 +349,12 @@ myStartupHook = return ()
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad defaults
+main = do
+    maybePactl <- findExecutable "pactl"
+    let audio = case maybePactl of
+                  Just _  -> pactlInterface
+                  Nothing -> wpctlInterface
+    xmonad (defaults audio)
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -337,7 +362,7 @@ main = xmonad defaults
 --
 -- No need to modify this.
 --
-defaults = def {
+defaults audio = def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -349,7 +374,7 @@ defaults = def {
         focusedBorderColor = myFocusedBorderColor,
 
       -- key bindings
-        keys               = myKeys,
+        keys               = myKeys audio,
         mouseBindings      = myMouseBindings,
 
       -- hooks, layouts
