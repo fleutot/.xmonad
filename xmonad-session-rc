@@ -52,7 +52,7 @@ if [[ -d /usr/share/themes/Nordic-darker-standard-buttons ]] ; then
     export GTK_THEME=Nordic-darker-standard-buttons
 fi
 export QT_QPA_PLATFORMTHEME=qt5ct
-ort QT_STYLE_OVERRIDE=kvantum
+export QT_STYLE_OVERRIDE=kvantum
 
 # Tray for skype and other icons
 # Nowadays dealing with trayer on user request only, see xmonad.hs. Even using xfce4-panel.
