@@ -31,10 +31,6 @@ fi
 if [ "$NB_CONNECT_OUTPUT" == 3 ] ; then
     echo "Docking on login" >> "$XMONAD_LOG_FILE"
     dock
-else
-    echo "Undocking on login" >> "$XMONAD_LOG_FILE"
-    # Undocking here does not work on my thinkpad??
-    undock
 fi
 
 # Compositor
